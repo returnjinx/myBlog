@@ -1,0 +1,166 @@
+body, html, div, blockquote, img, label, p, h1, h2, h3, h4, h5, h6, pre, ul, ol,
+li, dl, dt, dd, form, a, fieldset, input, th, td
+{margin: 0; padding: 0; border: 0; outline: none;word-wrap:break-word; word-break:break-all;}
+ul, ol{list-style: none;}
+a{color: black;text-decoration: none;}
+a:hover
+{text-decoration: underline;}
+.floatLeft{float: left;padding: .5em .5em .5em 0;}
+.floatRight{float: right;padding: .5em 0 .5em .5em;}
+body, button, input, select, textarea,pre{
+    font: 14px/1 arial,helvetica,sans-serif;font-family: Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif !important;
+}
+pre{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+.clearfix:after, .clearfix:before {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.clearfix:after {
+    clear: both;
+}
+
+
+body a {
+    text-decoration: none;
+    color: #333;
+    outline: 0;
+}
+a:link {
+    text-decoration:none;
+}
+a:visited{
+    text-decoration:none;
+ }
+a:hover{
+    text-decoration:none;
+}
+a:active{
+    text-decoration:none;
+}
+.noshow{
+    display: none;
+}
+*{
+    -webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+html{
+}
+body{
+    /*-webkit-overflow-scrolling: touch;*/
+    width: 100%;
+    /*height:100%;*/
+    margin:0 auto;
+    overflow-y: auto;
+
+}
+#app{
+    width: 100%;
+    height:100%;
+    background: #f4f4f4;
+}
+.clearfix:after, .clearfix:before {
+    content: "";
+    display: table;
+    line-height: 0
+}
+.clearfix:after {
+    clear: both
+}
+img{
+    display: block;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+     color: #999;
+ }
+input::-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color: #999;
+ }
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color: #999;
+ }
+input::-ms-input-placeholder { /* Internet Explorer 10+ */
+     color: #999;
+ }
+textarea::-webkit-input-placeholder { /* WebKit browsers */
+     color: #999;
+ }
+textarea::-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color: #999;
+ }
+textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color: #999;
+ }
+textarea::-ms-input-placeholder { /* Internet Explorer 10+ */
+     color: #999;
+ }
+
+body,html{
+    overflow:initial  !important;
+}
+
+/*iframe{display: none!important;}*/
+/*img[lazy=loading] {*/
+   /*background: #f2f2f2;*/
+/*}*/
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+    body{
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .iphonex-pt{
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+    }
+    .iphonex-pb{
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .iphonex-mt{
+        margin-top: constant(safe-area-inset-top);
+        margin-top: env(safe-area-inset-top);
+    }
+    .iphonex-mb{
+        margin-bottom: constant(safe-area-inset-bottom);
+        margin-bottom: env(safe-area-inset-bottom);
+    }
+    .iphonex-pl{
+        padding-left: constant(safe-area-inset-left);
+        padding-left: env(safe-area-inset-left);
+    }
+    .iphonex-pr{
+        padding-right: constant(safe-area-inset-right);
+        padding-right: env(safe-area-inset-right);
+    }
+    .iphonex-ml{
+        margin-left: constant(safe-area-inset-left);
+        margin-left: env(safe-area-inset-left);
+    }
+    .iphonex-mr{
+        margin-right: constant(safe-area-inset-right);
+        margin-right: env(safe-area-inset-right);
+    }
+    .iphonex-bd-top-bg{
+        border-top: 88px solid transparent;
+    }
+    .iphonex-bd-top{
+        border-top: 44px solid transparent;
+    }
+    .iphonex-bd-bottom{
+        border-bottom: 34px solid transparent;
+    }
+    .iphonex-height{
+        height: .8rem !important;
+    }
+    .iphonex-baiheight{
+        top:.4rem !important;
+
+    }
+
+}
