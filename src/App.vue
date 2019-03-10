@@ -28,9 +28,10 @@
                 console.log(res)
                 if(res.data.status==1){
                     this.$router.replace('/main');
-                    sessionStorage.setItem('username',res.data.username)
+                    sessionStorage.setItem('username',res.data.username);
                 }else{
                     this.$router.replace('/login');
+                    sessionStorage.removeItem('username');
                 }
             }).catch(function (err) {
 
