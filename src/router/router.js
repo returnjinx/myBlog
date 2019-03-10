@@ -21,8 +21,8 @@ export  default  new VueRouter({
     routes: [
         //连载页
         {path: '/main', component: my.main},
-        {path: '/register', component: my.register},
         {path: '/login', component: my.login},
+        {path: '/register', component: my.register},
 
 
 

@@ -5,22 +5,14 @@
 </template>
 <style lang="less">
  #app{
-
+    max-width: 500px;
+     margin: 0 auto;
     input{
         line-height: normal !important;
     }
 
  }
- .loadingT{
-     position: fixed;
-     top: 50%;
-     left: 50%;
-     transform: translate3d(-50%, -50%, 0);
-     width: 2rem;
-     height: 2rem;
-     background-size: 100%;
-     z-index: 99999;
- }
+
 
 
 </style>

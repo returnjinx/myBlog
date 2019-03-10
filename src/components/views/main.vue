@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-
+        <mt-button size="large"  type="primary" @click="logout">退出登录</mt-button>
 
     </div>
 </template>
@@ -26,7 +26,18 @@
         components: {},
         //方法
         methods: {
+            logout(){
 
+                this.axios.get('/logout').then( (res) =>{
+                    console.log(res)
+                    if(res.data.status==1){
+                        this.$router.replace('/login')
+                    }
+
+                }).catch(function (err) {
+
+                })
+            }
 
         },
         //生命周期
