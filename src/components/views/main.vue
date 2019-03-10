@@ -46,11 +46,14 @@
         },
         //生命周期
         created(){
-            this.username=sessionStorage.getItem('username');
+
         },
         computed: {},
         mounted(){
+            let timeout = setTimeout(()=>{
+                this.username=sessionStorage.getItem('username');
 
+            },0)
 
         }
     }
