@@ -8,7 +8,7 @@
         </div>
         <div style="width: 80%;padding: 0 10%;box-sizing: border-box;margin: 0 auto;">
             <mt-button size="large"  type="primary" @click="login">登录</mt-button>
-            <mt-button size="large"  type="default" @click="$router.replace('/register')">注册</mt-button>
+            <mt-button size="large"  type="default" @click="$router.replace('/register')">去注册</mt-button>
         </div>
 
 
@@ -51,13 +51,19 @@
         components: {},
         //方法
         methods: {
-            openSimpleDialog () {
-                this.openSimple = true;
-            },
-            closeSimpleDialog () {
-                this.openSimple = false;
-            },
             login() {
+                if(this.username==""){
+                    Toast({
+                        message: '输入用户名',
+                    });
+                    return false;
+                }
+                if(this.password==""){
+                    Toast({
+                        message: '输入密码',
+                    });
+                    return false;
+                }
                this.axios.post('/login', {
                    username: this.username,
                    password: this.password
@@ -67,7 +73,7 @@
                        message: res.data.Msg,
                    });
                    if(res.data.status==1){
-                       this.$router.replace('/main')
+                       this.$router.replace('/main');
                    }
                }).catch(function (err) {
 
@@ -77,14 +83,7 @@
         },
         //生命周期
         created(){
-            this.axios.get('/checkLogin').then( (res) =>{
-                console.log(res)
-                if(res.data.status==1){
-                    this.$router.replace('/main')
-                }
-            }).catch(function (err) {
 
-            })
         },
         computed: {},
         mounted(){

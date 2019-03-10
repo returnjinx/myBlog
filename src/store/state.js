@@ -3,7 +3,7 @@
  */
 
 const state = {
-
+    username:'',
 }
 
 

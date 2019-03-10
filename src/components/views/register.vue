@@ -51,6 +51,25 @@
         //方法
         methods: {
             register(){
+                if(this.username==""){
+                    Toast({
+                        message: '输入用户名',
+                    });
+                    return false;
+                }
+                if(this.password==""){
+                    Toast({
+                        message: '输入密码',
+                    });
+                    return false;
+                }
+                if(this.nickname==""){
+                    Toast({
+                        message: '输入昵称',
+                    });
+                    return false;
+                }
+
                 this.axios.post('/register',{
                     'nickname':this.nickname,
                     'username':this.username,

@@ -1,25 +1,29 @@
 <template>
     <div id="main">
-        <mt-button size="large"  type="primary" @click="logout">退出登录</mt-button>
-
+        <!--<mt-button  icon="back" size="small"  type="primary" @click="logout">退出登录</mt-button>-->
+        <mt-header :title="'欢迎，'+username">
+            <div slot="right">
+                <mt-button @click.native="logout">退出登录</mt-button>
+            </div>
+            <!--<mt-button icon="more" slot="right"></mt-button>-->
+        </mt-header>
     </div>
 </template>
 <style lang="less">
     #main{
-
+        width: 100%;
+        height: 100vh;
+        background: #fff;
     }
 </style>
 <script>
-    import {Toast} from 'mint-ui';
+    import {Toast,Header} from 'mint-ui';
     export default{
         //数据处理
         name: 'backlogin',
         data() {
             return {
-                username: "xjxq",
-                password: "12",
-                disablebtn: false,
-                loginText: "登录"
+                username: "",
             }
         },
         //引用的组件
@@ -27,11 +31,11 @@
         //方法
         methods: {
             logout(){
-
                 this.axios.get('/logout').then( (res) =>{
                     console.log(res)
                     if(res.data.status==1){
-                        this.$router.replace('/login')
+                        sessionStorage.removeItem('username');
+                        this.$router.replace('/login');
                     }
 
                 }).catch(function (err) {
@@ -42,7 +46,7 @@
         },
         //生命周期
         created(){
-
+            this.username=sessionStorage.getItem('username');
         },
         computed: {},
         mounted(){

@@ -13,7 +13,7 @@ if (!window.Promise) {
 Vue.use(Mint);
 import axios from 'axios';
 axios.defaults.withCredentials=true;  //跨域保存session有用
-axios.defaults.baseURL="http://192.168.0.241:3000";
+axios.defaults.baseURL="http://192.168.0.105:3000";
 
 Vue.prototype.axios=axios;
 const app = new Vue({
