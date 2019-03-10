@@ -50,10 +50,23 @@
         },
         computed: {},
         mounted(){
-            let timeout = setTimeout(()=>{
-                this.username=sessionStorage.getItem('username');
+            this.axios.get('/checkLogin').then( (res) =>{
+                console.log(res)
+                if(res.data.status==1){
+                    // sessionStorage.setItem('username',res.data.username);
+                    this.$router.replace('/main');
+                    this.username=res.data.username
+                }else{
+                    this.$router.replace('/login');
+                    sessionStorage.removeItem('username');
+                }
+            }).catch(function (err) {
 
-            },0)
+            })
+            // let timeout = setTimeout(()=>{
+            //     this.username=sessionStorage.getItem('username');
+            //
+            // },0)
 
         }
     }

@@ -24,19 +24,7 @@
             }
         },
         created(){
-            this.axios.get('/checkLogin').then( (res) =>{
-                console.log(res)
-                if(res.data.status==1){
-                    sessionStorage.setItem('username',res.data.username);
-                    this.$router.replace('/main');
 
-                }else{
-                    this.$router.replace('/login');
-                    sessionStorage.removeItem('username');
-                }
-            }).catch(function (err) {
-
-            })
         },
         mounted(){
         },
