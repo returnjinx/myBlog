@@ -112,7 +112,6 @@
                             this.num = this.$store.state.playIndex;
                             let audio = document.getElementById('audio');
                             document.addEventListener("WeixinJSBridgeReady", function () {
-                                alert(1)
                                 audio.play();
                             }, false);
                             this.listen()
