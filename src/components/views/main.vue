@@ -88,7 +88,21 @@
                 if(res.data.status==1){
                     // sessionStorage.setItem('username',res.data.username);
                     this.$router.replace('/main');
-                    this.username=res.data.username
+                    this.username=res.data.username;
+                    this.axios.post('/getMusic').then( (res) =>{
+                        console.log(res)
+                        if(res.data.status==1){
+                            this.$store.state.musicList = res.data.data;
+                            this.$store.commit('setMusicList', res.data.data[0].url);
+                            let audio = document.getElementById('audio');
+                            document.addEventListener("WeixinJSBridgeReady", function () {
+                                audio.play();
+                            }, false);
+                            console.log(this.$store.state)
+                        }
+                    }).catch(function (err) {
+
+                    })
                 }else{
                     this.$router.replace('/login');
                     sessionStorage.removeItem('username');
@@ -96,20 +110,7 @@
             }).catch(function (err) {
 
             })
-            this.axios.post('/getMusic').then( (res) =>{
-                console.log(res)
-                if(res.data.status==1){
-                    this.$store.state.musicList = res.data.data;
-                    this.$store.commit('setMusicList', res.data.data[0].url);
-                    let audio = document.getElementById('audio');
-                    document.addEventListener("WeixinJSBridgeReady", function () {
-                        audio.play();
-                    }, false);
-                   console.log(this.$store.state)
-                }
-            }).catch(function (err) {
 
-            })
 
         }
     }

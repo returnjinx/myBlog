@@ -67,7 +67,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             hash: true,
             template: 'index-build.html',
-            title: '直播入口',
+            title: 'Hello丶Jinx',
         }),
         // new webpack.optimize.CommonsChunkPlugin({name:'index2',filename:'js/index2.js'})
     ],
