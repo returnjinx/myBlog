@@ -110,11 +110,16 @@
                             this.$store.state.musicList = res.data.data;
                             this.$store.commit('setMusicList', res.data.data[0].url);
                             this.num = this.$store.state.playIndex;
-                            let audio = document.getElementById('audio');
-                            document.addEventListener("WeixinJSBridgeReady", ()=> {
+                            this.$nextTick(()=>{
+                                let audio = document.getElementById('audio');
+                                console.log(audio)
                                 audio.play();
-                            }, false);
-                            this.listen()
+                                document.addEventListener("WeixinJSBridgeReady", ()=> {
+                                    audio.play();
+                                }, false);
+                                this.listen()
+                            })
+
 
                         }
                     }).catch(function (err) {
