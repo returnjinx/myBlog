@@ -115,6 +115,7 @@
                                 audio.play();
                             }, false);
                             this.listen()
+
                         }
                     }).catch(function (err) {
 
