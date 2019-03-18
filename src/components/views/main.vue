@@ -111,7 +111,7 @@
                             this.$store.commit('setMusicList', res.data.data[0].url);
                             this.num = this.$store.state.playIndex;
                             let audio = document.getElementById('audio');
-                            document.addEventListener("WeixinJSBridgeReady", function () {
+                            document.addEventListener("WeixinJSBridgeReady", ()=> {
                                 audio.play();
                             }, false);
                             this.listen()

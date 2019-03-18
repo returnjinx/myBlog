@@ -155,10 +155,6 @@
         computed: {},
         mounted(){
             this.list = this.$store.state.musicList;
-            let audio = document.getElementById('audio');
-            document.addEventListener("WeixinJSBridgeReady", function () {
-                audio.play();
-            }, false);
         }
     }
 </script>

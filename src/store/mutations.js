@@ -8,6 +8,11 @@ const mutations = {
     setMusicList:(state,url)=>{
         state.playIndex=0;
         state.play_url=url;
+        let audio = document.getElementById('audio');
+        audio.play();
+        document.addEventListener("WeixinJSBridgeReady", ()=> {
+            audio.play();
+        }, false);
     },
     chooseMusic:(state,index)=> {
         state.playIndex=index;
