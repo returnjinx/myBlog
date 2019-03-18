@@ -3,7 +3,7 @@
         <div @click.self="close()" class="layer">
             <div class="List">
                 <div @click="changeMusic(index)" v-for="i,index in list" class="tag" :class="num==index ? 'active':''">
-                    <span class="name">{{i.name}}</span> <div class="iconBox"><i @click.stop="chooseMusic(i,index)" class="icon" :class="$store.state.playIndex==index ?'pause':'play'"></i></div>
+                    <span class="name">{{i.name}}</span> <div class="iconBox"><i @click.stop="chooseMusic(index)" class="icon" :class="!pause && $store.state.playIndex==index ?'pause':'play'"></i></div>
                 </div>
                 <!--<div class="tag">-->
                     <!--<span class="name">你就不要想起我</span> <i class="icon play"></i>-->
@@ -95,6 +95,7 @@
             return {
                 list:[],
                 num:'',
+                pause:false,
             }
         },
         //引用的组件
@@ -110,11 +111,42 @@
             close(){
                 this.$emit('close')
             },
-            chooseMusic(data,index){
-                this.num = index;
-                this.$store.commit('chooseMusic', index,data.url);
+            chooseMusic(index){
+                if(index == this.$store.state.playIndex){
+                    if(!this.pause){
+                        let audio = document.getElementById('audio');
+                        audio.pause();
+                        this.pause=true;
+                        // this.$store,commit('change','');
+                    }else{
+                        let audio = document.getElementById('audio');
+                        audio.play();
+                        this.pause=false;
+                    }
 
-            }
+                }else{
+                    this.pause=false;
+                    this.num = index;
+                    this.$store.commit('chooseMusic', index);
+
+                }
+
+                // this.listen();
+            },
+            listen(){
+                // audio.removeEventListener("ended",this.listen,false);
+                let audio = document.getElementById('audio');
+                audio.addEventListener('ended',  ()=> {
+                    if(this.num>=this.list.length-1){
+                        this.num=0;
+                    }else{
+                        this.num++;
+                    }
+                    this.$store.commit('chooseMusic', this.num);
+                    audio.play();
+                }, false);
+            },
+
         },
         //生命周期
         created(){

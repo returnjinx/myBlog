@@ -50,6 +50,7 @@
                 username: "",
                 musicEffect:false,
                 musicShow:false,
+                num:'',
             }
         },
         //引用的组件
@@ -74,7 +75,21 @@
                 }).catch(function (err) {
 
                 })
-            }
+            },
+            listen(){
+                // audio.removeEventListener("ended",this.listen,false);
+                let audio = document.getElementById('audio');
+                audio.addEventListener('ended',  ()=> {
+                    this.num = this.$store.state.playIndex;
+                    if(this.num>=this.$store.state.musicList.length-1){
+                        this.num=0;
+                    }else{
+                        this.num++;
+                    }
+                    this.$store.commit('chooseMusic', this.num);
+                    audio.play();
+                }, false);
+            },
 
         },
         //生命周期
@@ -94,11 +109,12 @@
                         if(res.data.status==1){
                             this.$store.state.musicList = res.data.data;
                             this.$store.commit('setMusicList', res.data.data[0].url);
+                            this.num = this.$store.state.playIndex;
                             let audio = document.getElementById('audio');
                             document.addEventListener("WeixinJSBridgeReady", function () {
                                 audio.play();
                             }, false);
-                            console.log(this.$store.state)
+                            this.listen()
                         }
                     }).catch(function (err) {
 
