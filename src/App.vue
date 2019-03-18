@@ -1,15 +1,18 @@
 <template>
     <div id="app">
          <router-view class="app_view"></router-view>
+        <audio id="audio" :src="$store.state.play_url" autoplay preload="auto"></audio>
     </div>
 </template>
 <style lang="less">
  #app{
     max-width: 500px;
      margin: 0 auto;
+     position: relative;
     input{
         line-height: normal !important;
     }
+
 
  }
 
@@ -20,13 +23,13 @@
     export default {
         data () {
             return {
-
             }
         },
         created(){
 
         },
         mounted(){
+
         },
         methods: {
         },

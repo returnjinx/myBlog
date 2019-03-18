@@ -5,8 +5,9 @@
             <div slot="right">
                 <mt-button @click.native="logout">退出登录</mt-button>
             </div>
-            <!--<mt-button icon="more" slot="right"></mt-button>-->
         </mt-header>
+        <div class="music" v-if="!musicEffect" @click="musicShow=true;musicEffect=true;"></div>
+        <musicList @close="close()" v-if="musicShow" class="animated" :class="musicEffect ?'bounceInRight':'bounceOutRight'"></musicList>
     </div>
 </template>
 <style lang="less">
@@ -14,22 +15,54 @@
         width: 100%;
         height: 100vh;
         background: #fff;
+        position: relative;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        .mint-header{
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            height: 1rem;
+            font-size: .3rem;
+        }
+        .music{
+            width: .5rem;
+            height: .5rem;
+            background: url("../../img/musicIcon.png")no-repeat;
+            background-size: 100%;
+            position: fixed;
+            top:1.2rem;
+            right:.24rem;
+        }
     }
 </style>
 <script>
     import {Toast,Header} from 'mint-ui';
+    import musicList from'./musicList.vue';
+
     export default{
         //数据处理
         name: 'backlogin',
         data() {
             return {
                 username: "",
+                musicEffect:false,
+                musicShow:false,
             }
         },
         //引用的组件
-        components: {},
+        components: {musicList},
         //方法
         methods: {
+            close(){
+                this.musicEffect=false;
+                let s =setTimeout(()=>{
+                    this.musicShow = false;
+                    clearTimeout(s)
+                },1000)
+            },
             logout(){
                 this.axios.get('/logout').then( (res) =>{
                     console.log(res)
@@ -51,7 +84,7 @@
         computed: {},
         mounted(){
             this.axios.get('/checkLogin').then( (res) =>{
-                console.log(res)
+//                console.log(res)
                 if(res.data.status==1){
                     // sessionStorage.setItem('username',res.data.username);
                     this.$router.replace('/main');
@@ -63,10 +96,20 @@
             }).catch(function (err) {
 
             })
-            // let timeout = setTimeout(()=>{
-            //     this.username=sessionStorage.getItem('username');
-            //
-            // },0)
+            this.axios.post('/getMusic').then( (res) =>{
+                console.log(res)
+                if(res.data.status==1){
+                    this.$store.state.musicList = res.data.data;
+                    this.$store.commit('setMusicList', res.data.data[0].url);
+                    let audio = document.getElementById('audio');
+                    document.addEventListener("WeixinJSBridgeReady", function () {
+                        audio.play();
+                    }, false);
+                   console.log(this.$store.state)
+                }
+            }).catch(function (err) {
+
+            })
 
         }
     }

@@ -4,7 +4,9 @@
 
 import axios from 'axios';
 // import qiniu from 'qiniu';
+const actions = {
 
+}
 
 
 export default actions

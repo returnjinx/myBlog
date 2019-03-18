@@ -5,12 +5,17 @@
 import axios from 'axios';
 // import qiniu from 'qiniu';
 const mutations = {
-
-    setUserNmae:(state,val)=> {
-        alert(1)
-        console.log(val)
-        // state.username=val
+    setMusicList:(state,url)=>{
+        state.playIndex=0;
+        state.play_url=url;
     },
+    chooseMusic:(state,index)=> {
+        state.playIndex=index;
+        state.play_url=state.musicList[index].url;
+    },
+    change:(state,index)=> {
+        state.playIndex=index;
+    }
 
 }
 

@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
 import index from './common/index';
-
+import store from './store/store';
 import Promise from 'promise-polyfill';
 import router from './router/router';
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
+import './common/css/animate.min.css';
 if (!window.Promise) {
     window.Promise = Promise;
 }
@@ -13,12 +14,14 @@ if (!window.Promise) {
 Vue.use(Mint);
 import axios from 'axios';
 axios.defaults.withCredentials=true;  //跨域保存session有用
-axios.defaults.baseURL="http://192.168.0.105:3000";
+// axios.defaults.baseURL="http://192.168.0.105:3000";
+axios.defaults.baseURL="http://192.168.0.241:3000";
 
 Vue.prototype.axios=axios;
 const app = new Vue({
     render: (h)=>h(App),
     router,
+    store,
     index
 });
 
