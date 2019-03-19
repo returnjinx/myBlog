@@ -1,7 +1,7 @@
 <template>
     <div id="app">
          <router-view class="app_view"></router-view>
-        <audio id="audio" :src="$store.state.play_url" autoplay preload="auto"></audio>
+        <audio id="audio" v-if="$store.state.play_url!=''" :src="$store.state.play_url" autoplay preload="auto"></audio>
     </div>
 </template>
 <style lang="less">
