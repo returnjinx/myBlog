@@ -107,8 +107,7 @@
                     this.axios.post('/getMusic').then( (res) =>{
                         console.log(res)
                         if(res.data.status==1){
-
-                            this.$nextTick(()=>{
+                            setTimeout(()=>{
                                 this.$store.state.musicList = res.data.data;
                                 this.$store.commit('setMusicList', res.data.data[0].url);
                                 this.num = this.$store.state.playIndex;
@@ -119,7 +118,8 @@
                                     audio.play();
                                 }, false);
                                 this.listen()
-                            })
+                            },0)
+
 
 
                         }
