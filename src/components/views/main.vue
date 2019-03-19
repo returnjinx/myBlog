@@ -107,7 +107,6 @@
                     this.axios.post('/getMusic').then( (res) =>{
                         console.log(res)
                         if(res.data.status==1){
-                            
                             setTimeout(()=>{
                                 this.$store.state.musicList = res.data.data;
                                 this.$store.commit('setMusicList', res.data.data[0].url);
