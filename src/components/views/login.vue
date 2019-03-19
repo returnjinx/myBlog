@@ -74,6 +74,8 @@
                    });
                    if(res.data.status==1){
                        this.$router.replace('/main');
+                       let audio = document.getElementById('audio');
+                       audio.play();
                        // sessionStorage.setItem('username',res.data.username);
                    }
                }).catch(function (err) {

@@ -3,6 +3,7 @@
  */
 
 const state = {
+    username:'',
     bgmControl:false,
     musicList:[],
     playIndex:'',

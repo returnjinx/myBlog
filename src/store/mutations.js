@@ -5,6 +5,9 @@
 import axios from 'axios';
 // import qiniu from 'qiniu';
 const mutations = {
+    setUserName:(state,name)=>{
+        state.username=name;
+    },
     setMusicList:(state,url)=>{
         state.playIndex=0;
         state.play_url=url;

@@ -8,6 +8,7 @@
         </mt-header>
         <div class="music" v-if="!musicEffect" @click="musicShow=true;musicEffect=true;"></div>
         <musicList @close="close()" v-if="musicShow" class="animated" :class="musicEffect ?'bounceInRight':'bounceOutRight'"></musicList>
+        <span>{{num1}}</span>
     </div>
 </template>
 <style lang="less">
@@ -51,6 +52,8 @@
                 musicEffect:false,
                 musicShow:false,
                 num:'',
+                num1:'',
+                src:'',
             }
         },
         //引用的组件
@@ -70,6 +73,8 @@
                     if(res.data.status==1){
                         sessionStorage.removeItem('username');
                         this.$router.replace('/login');
+                        let audio = document.getElementById('audio');
+                        audio.pause();
                     }
 
                 }).catch(function (err) {
@@ -79,6 +84,8 @@
             listen(){
                 // audio.removeEventListener("ended",this.listen,false);
                 let audio = document.getElementById('audio');
+                audio.src = this.src;
+
                 audio.addEventListener('ended',  ()=> {
                     this.num = this.$store.state.playIndex;
                     if(this.num>=this.$store.state.musicList.length-1){
@@ -95,10 +102,6 @@
         //生命周期
         created(){
 
-        },
-        computed: {},
-        mounted(){
-
             this.axios.get('/checkLogin').then( (res) =>{
 //                console.log(res)
                 if(res.data.status==1){
@@ -107,20 +110,19 @@
                     this.username=res.data.username;
                     this.axios.post('/getMusic').then( (res) =>{
                         console.log(res)
-                        
                         if(res.data.status==1){
-                           this.$nextTick(()=>{
-                               this.$store.state.musicList = res.data.data;
-                               // this.$store.commit('setMusicList', res.data.data[0].url);
-                               this.num = this.$store.state.playIndex;
-                               let audio = document.getElementById('audio');
-                               audio.src=res.data.data[0].url;
-                               audio.play();
-                               document.addEventListener("WeixinJSBridgeReady", ()=> {
-                                   audio.play();
-                               }, false);
-                               this.listen()
-                           })
+                            this.$nextTick(()=>{
+                                if(this.$store.state.musicList.length==0){
+                                    this.$store.state.musicList = res.data.data;
+                                    this.$store.commit('setMusicList', res.data.data[0].url);
+                                    this.$store.commit('change',0);
+                                    this.num = this.$store.state.playIndex;
+                                    this.listen()
+
+                                }
+
+                                // this.src = res.data.data[0].url;
+                            })
                         }
                     }).catch(function (err) {
 
@@ -132,6 +134,17 @@
             }).catch(function (err) {
 
             })
+
+
+        },
+        computed: {},
+        mounted(){
+
+            // let audio = document.getElementById('audio');
+            // document.addEventListener("WeixinJSBridgeReady", ()=> {
+            //     audio.play();
+            // }, false);
+
 
 
         }

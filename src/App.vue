@@ -1,7 +1,8 @@
 <template>
     <div id="app">
          <router-view class="app_view"></router-view>
-        <audio id="audio" :src="$store.state.play_url" autoplay preload="auto"></audio>
+        <audio id="audio" :src="$store.state.play_url"  autoplay preload="auto"></audio>
+
     </div>
 </template>
 <style lang="less">
@@ -29,7 +30,10 @@
 
         },
         mounted(){
-
+            let audio = document.getElementById('audio');
+            document.addEventListener("WeixinJSBridgeReady", ()=> {
+                audio.play();
+            }, false);
         },
         methods: {
         },
