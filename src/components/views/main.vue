@@ -98,6 +98,7 @@
         },
         computed: {},
         mounted(){
+
             this.axios.get('/checkLogin').then( (res) =>{
 //                console.log(res)
                 if(res.data.status==1){
