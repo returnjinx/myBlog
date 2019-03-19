@@ -109,23 +109,18 @@
                         console.log(res)
                         
                         if(res.data.status==1){
-                            setTimeout(()=>{
-                                this.$store.state.musicList = res.data.data;
-                                this.$store.commit('setMusicList', res.data.data[0].url);
-                                this.num = this.$store.state.playIndex;
-                                if(this.$store.state.play_url!=''){
-                                    let audio = document.getElementById('audio');
-                                    console.log(audio)
-                                    audio.play();
-                                    document.addEventListener("WeixinJSBridgeReady", ()=> {
-                                        audio.play();
-                                    }, false);
-                                    this.listen()
-                                }
-                            },0)
-
-
-
+                           this.$nextTick(()=>{
+                               this.$store.state.musicList = res.data.data;
+                               // this.$store.commit('setMusicList', res.data.data[0].url);
+                               this.num = this.$store.state.playIndex;
+                               let audio = document.getElementById('audio');
+                               audio.src=res.data.data[0].url;
+                               audio.play();
+                               document.addEventListener("WeixinJSBridgeReady", ()=> {
+                                   audio.play();
+                               }, false);
+                               this.listen()
+                           })
                         }
                     }).catch(function (err) {
 
