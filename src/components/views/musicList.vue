@@ -3,7 +3,7 @@
         <div @click.self="close()" class="layer">
             <div class="List">
                 <div @click="changeMusic(index)" v-for="i,index in list" class="tag" :class="num==index ? 'active':''">
-                    <span class="name">{{i.name}}</span> <div class="iconBox"><i @click.stop="chooseMusic(index)" class="icon" :class="!pause && $store.state.playIndex==index ?'pause':'play'"></i></div>
+                    <span class="name">{{index+1}}、{{i.name}}</span> <div class="iconBox"><i @click.stop="chooseMusic(index)" class="icon" :class="!pause && $store.state.playIndex==index ?'pause':'play'"></i></div>
                 </div>
                 <!--<div class="tag">-->
                     <!--<span class="name">你就不要想起我</span> <i class="icon play"></i>-->

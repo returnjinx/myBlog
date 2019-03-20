@@ -108,25 +108,49 @@
                     // sessionStorage.setItem('username',res.data.username);
                     this.$router.replace('/main');
                     this.username=res.data.username;
-                    this.axios.post('/getMusic').then( (res) =>{
-                        console.log(res)
-                        if(res.data.status==1){
-                            this.$nextTick(()=>{
-                                if(this.$store.state.musicList.length==0){
-                                    this.$store.state.musicList = res.data.data;
-                                    this.$store.commit('setMusicList', res.data.data[0].url);
-                                    this.$store.commit('change',0);
-                                    this.num = this.$store.state.playIndex;
-                                    this.listen()
 
-                                }
+                    const url = 'http://hellojinx.cn:4000/top/list?idx=1';
+                    // fetch(url).then((res)=> {
+                    //     let list = res.json()
+                    //     console.log(list)
+                    // })
+                    fetch(url).then(response => {
+                        response.json().then((data) => {
+                            console.log(data)
+                            console.log(data.playlist.tracks);
+                            this.$store.commit('setMusicList', data.playlist.tracks);
+                            this.$store.commit('setMusic', data.playlist.tracks[0].id);
+                            this.$store.commit('change',0);
+                            this.num = this.$store.state.playIndex;
+                            this.listen()
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                    }).catch(error => console.log("刚开始就出错了,,,,", error)
 
-                                // this.src = res.data.data[0].url;
-                            })
-                        }
-                    }).catch(function (err) {
+                    )
 
-                    })
+
+                    // this.axios.post('/getMusic').then( (res) =>{
+                    //     console.log(res)
+                    //     if(res.data.status==1){
+                    //         this.$nextTick(()=>{
+                    //             if(this.$store.state.musicList.length==0){
+                    //                 // this.$store.state.musicList = res.data.data;
+                    //                 this.$store.commit('setMusicList', res.data.data);
+                    //                 this.$store.commit('setMusic', res.data.data[0].url);
+                    //                 this.$store.commit('change',0);
+                    //                 this.num = this.$store.state.playIndex;
+                    //                 this.listen()
+                    //
+                    //             }
+                    //
+                    //             // this.src = res.data.data[0].url;
+                    //         })
+                    //     }
+                    // }).catch(function (err) {
+                    //
+                    // })
                 }else{
                     this.$router.replace('/login');
                     sessionStorage.removeItem('username');
