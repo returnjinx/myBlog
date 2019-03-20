@@ -8,7 +8,7 @@
         </mt-header>
         <div class="music" v-if="!musicEffect" @click="musicShow=true;musicEffect=true;"></div>
         <musicList @close="close()" v-if="musicShow" class="animated" :class="musicEffect ?'bounceInRight':'bounceOutRight'"></musicList>
-        <span>{{num1}}</span>
+        <swiperL></swiperL>
     </div>
 </template>
 <style lang="less">
@@ -36,12 +36,14 @@
             position: fixed;
             top:1.2rem;
             right:.24rem;
+            z-index: 2;
         }
     }
 </style>
 <script>
     import {Toast,Header} from 'mint-ui';
     import musicList from'./musicList.vue';
+    import swiperL from './swiperL.vue';
 
     export default{
         //数据处理
@@ -52,12 +54,11 @@
                 musicEffect:false,
                 musicShow:false,
                 num:'',
-                num1:'',
                 src:'',
             }
         },
         //引用的组件
-        components: {musicList},
+        components: {musicList,swiperL},
         //方法
         methods: {
             close(){

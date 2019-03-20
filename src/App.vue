@@ -7,7 +7,6 @@
 </template>
 <style lang="less">
  #app{
-    max-width: 500px;
      margin: 0 auto;
      position: relative;
     input{
