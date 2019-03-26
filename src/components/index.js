@@ -7,6 +7,7 @@ import main from './views/main.vue';
 import login from './views/login.vue';
 import register from './views/register.vue';
 import foot from './views/foot.vue';
+import plane from './views/plane.vue';
 
 
 
@@ -14,7 +15,8 @@ export default {
     main,
     login,
     register,
-    foot
+    foot,
+    plane
 
 }
 

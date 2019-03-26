@@ -28,6 +28,7 @@
     }
 </style>
 <script>
+    document.title='title';
     export default{
         //数据处理
         data(){
@@ -63,6 +64,16 @@
         //生命周期
         created(){
 
+                fetch('http://api.map.baidu.com/api?v=2.0&ak=ZPP6po24XVmVacKHnwvyXjscqpFAm9Hq').then(response => {
+                    response.json().then((data) => {
+                        console.log(data)
+
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                }).catch(error => console.log("刚开始就出错了,,,,", error)
+
+                )
         },
         computed: {},
         mounted(){
