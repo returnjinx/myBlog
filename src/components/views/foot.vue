@@ -28,7 +28,6 @@
     }
 </style>
 <script>
-    document.title='title';
     export default{
         //数据处理
         data(){

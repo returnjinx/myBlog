@@ -39,11 +39,11 @@
 <script>
     import bg from '../../img/assets/bg.jpg';
     import preloader from '../../img/assets/preloader.gif';
-    import copyright from '../../img/assets/copyright.png';
+//    import copyright from '../../img/assets/copyright.png';
     import myplane from '../../img/assets/myplane.png';
     import startbutton from '../../img/assets/startbutton.png';
     import replaybutton from '../../img/assets/replaybutton.png';
-    import sharebutton from '../../img/assets/sharebutton.png';
+//    import sharebutton from '../../img/assets/sharebutton.png';
     import mybullet from '../../img/assets/mybullet.png';
     import bullet from '../../img/assets/bullet.png';
     import enemy1 from '../../img/assets/enemy1.png';
@@ -76,7 +76,11 @@
         created(){
             // 分数
             var score = 0;
-            var game = new Phaser.Game(240, 400, Phaser.CANVAS, 'game');
+
+            var w = document.documentElement.scrollWidth || document.body.scrollWidth;
+            var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+
+            var game = new Phaser.Game(w, h, Phaser.CANVAS, 'game');
 
             game.States = {};
             function Enemy(config) {
@@ -167,11 +171,11 @@
                     var preloadSprite = game.add.sprite(10, game.height/2, 'loading');
                     game.load.setPreloadSprite(preloadSprite);
                     game.load.image('background', bg);
-                    game.load.image('copyright', copyright);
+//                    game.load.image('copyright', copyright);
                     game.load.spritesheet('myplane', myplane, 40, 40, 4);
                     game.load.spritesheet('startbutton', startbutton, 100, 40, 2);
                     game.load.spritesheet('replaybutton', replaybutton, 80, 30, 2);
-                    game.load.spritesheet('sharebutton', sharebutton, 80, 30, 2);
+//                    game.load.spritesheet('sharebutton', sharebutton, 80, 30, 2);
                     game.load.image('mybullet', mybullet);
                     game.load.image('bullet', bullet);
                     game.load.image('enemy1', enemy1);
@@ -200,7 +204,7 @@
             game.States.main = function() {
                 this.create = function() {
                     // 背景
-                    var bg = game.add.tileSprite(0, 0, game.width, game.height, 'background');
+                    var bg = game.add.tileSprite(0, 0, w, h, 'background');
                     // 版权
 //                    this.copyright = game.add.image(12, game.height - 16, 'copyright');
                     // 我的飞机
@@ -469,7 +473,7 @@
                     // 背景
                     var bg = game.add.tileSprite(0, 0, game.width, game.height, 'background');
                     // 版权
-                    this.copyright = game.add.image(12, game.height - 16, 'copyright');
+//                    this.copyright = game.add.image(12, game.height - 16, 'copyright');
                     // 我的飞机
                     this.myplane = game.add.sprite(100, 100, 'myplane');
                     this.myplane.animations.add('fly');
@@ -481,7 +485,7 @@
                     // 重来按钮
                     this.replaybutton = game.add.button(30, 300, 'replaybutton', this.onReplayClick, this, 0, 0, 1);
                     // 分享按钮
-                    this.sharebutton = game.add.button(130, 300, 'sharebutton', this.onShareClick, this, 0, 0, 1);
+//                    this.sharebutton = game.add.button(130, 300, 'sharebutton', this.onShareClick, this, 0, 0, 1);
                     // 背景音乐
                     this.normalback = game.add.audio('normalback', 0.2, true);
                     this.normalback.play();

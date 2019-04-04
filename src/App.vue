@@ -35,7 +35,7 @@
             document.addEventListener('touchstart',(res)=>{
                 if(this.$store.state.play_url!=''){
                     audio.play();
-                    this.$store.state.play_url = res.data.data.list;
+//                    this.$store.state.play_url = res.data.data.list;
                     if(this.playStatus){
                         let audio = document.getElementById('audio');
                         if(audio.src == res.data.data.list[index].url){

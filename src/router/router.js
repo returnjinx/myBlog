@@ -25,6 +25,7 @@ export  default  new VueRouter({
         {path: '/register', component: my.register},
         {path: '/foot', component: my.foot},
         {path: '/plane', component: my.plane},
+        {path: '/mood', component: my.mood},
 
 
 
