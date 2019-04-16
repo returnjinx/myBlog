@@ -4,12 +4,21 @@ import index from './common/index';
 import store from './store/store';
 import Promise from 'promise-polyfill';
 import router from './router/router';
+//muse-ui
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
+
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import './common/css/animate.min.css';
+
+
+
+
 if (!window.Promise) {
     window.Promise = Promise;
 }
+Vue.use(MuseUI);
 
 Vue.use(Mint);
 import axios from 'axios';
