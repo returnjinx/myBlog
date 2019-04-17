@@ -28,8 +28,7 @@ export  default  new VueRouter({
         {path: '/mood', component: my.mood},
         {path: '/moodList', component: my.moodList},
         {path: '/upload', component: my.upload},
-
-
+        {path: '/friend', component: my.friend},
 
         {path: '*', redirect: "/main"},
 

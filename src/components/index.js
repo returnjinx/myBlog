@@ -11,7 +11,7 @@ import plane from './views/plane.vue';
 import mood from './views/mood.vue';
 import moodList from './views/moodList.vue';
 import upload from './views/upload.vue';
-
+import friend from './views/friend.vue';
 
 
 export default {
@@ -22,6 +22,7 @@ export default {
     plane,
     mood,
     moodList,
-    upload
+    upload,
+    friend
 }
 
