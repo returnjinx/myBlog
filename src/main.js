@@ -22,10 +22,11 @@ Vue.use(MuseUI);
 
 Vue.use(Mint);
 import axios from 'axios';
+Vue.prototype.imgUrl="http://127.0.0.1:3000";
 axios.defaults.withCredentials=true;  //跨域保存session有用
 // axios.defaults.baseURL="http://192.168.0.105:3000";
-// axios.defaults.baseURL="http://192.168.0.241:3000";
-axios.defaults.baseURL="http://hellojinx.cn:3000/";
+axios.defaults.baseURL="http://192.168.0.241:3000";
+// axios.defaults.baseURL="http://hellojinx.cn:3000/";
 
 
 Vue.prototype.axios=axios;
