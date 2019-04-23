@@ -1,6 +1,7 @@
 <template>
     <div id="chat">
-
+        <input class="input" v-model="message" type="text" maxlength="14" />
+        <button id="bbb" @click="send()">点击发送消息</button>
     </div>
 </template>
 <style lang="less">
@@ -9,15 +10,29 @@
     }
 </style>
 <script>
+    import { Toast} from 'mint-ui';
     export default{
         //数据处理
         data(){
-            return {}
+            return {
+                message:'',
+            }
         },
         //引用的组件
         components: {},
         //方法
-        methods: {},
+        methods: {
+            send(){
+
+                if(this.message!=''){
+                    this.ws.emit('new message',this.message)
+                }else{
+                    Toast({
+                        message: '请输入信息',
+                    })
+                }
+            }
+        },
         //生命周期
         created(){
 
@@ -33,25 +48,25 @@
 //            }
 
 
-            var ws = io.connect("ws://localhost:3001");
+            this.ws = io.connect("ws://localhost:3001");
             //接收数据 1创建dom
 
-            ws.on("msg",function(data){
+            this.ws.on("msg",function(data){
                 console.log(data);
             });
-//            ws.on("connected",function(data){
+//            this.ws.on("connected",function(data){
 //                console.log(data);
 //            });
-            ws.on("connecting",function(data){
+            this.ws.on("connecting",function(data){
                 console.log('连接中...');
             });
-            ws.on("connect",function(data){
+            this.ws.on("connect",(data)=>{
                 console.log('连接成功');
 
-                ws.emit('msg', {data:"fine,thank you"});
+                this.ws.emit('msg', {data:"fine,thank you"});
 
             });
-            ws.on("connect_failed",function(data){
+            this.ws.on("connect_failed",function(data){
                 console.log('连接失败');
             });
         }
