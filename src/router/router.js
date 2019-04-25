@@ -29,7 +29,7 @@ export  default  new VueRouter({
         {path: '/moodList', component: my.moodList},
         {path: '/upload', component: my.upload},
         {path: '/friend', component: my.friend},
-        {path: '/chat', component: my.chat},
+        {path: '/chat/:from_id/:to_id', component: my.chat},
 
         {path: '*', redirect: "/main"},
 
