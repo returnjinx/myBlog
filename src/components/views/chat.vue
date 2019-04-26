@@ -1,5 +1,6 @@
 <template>
     <div id="chat">
+        <!--<mt-header title="发表心情"></mt-header>-->
         <input class="input" v-model="message" type="text" maxlength="14" />
         <button id="bbb" @click="send()">点击发送消息</button>
     </div>
@@ -20,6 +21,7 @@
                 to_id:'',
                 send_token:'',
                 receive_token:'',
+                ws:'',
             }
         },
         //引用的组件
@@ -47,25 +49,19 @@
         },
         computed: {},
         mounted(){
-
-//            var ws = new WebSocket('ws://localhost:3001');
-//            console.log(ws)
-//            ws.onopen = function (e) {
-//                console.log("1");
-//                ws.send("1");
-//            }
-
+            Array.prototype.notempty = function() {
+                var arr = [];
+                this.map(function(val, index) {
+                    //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
+                    if (val !== "" && val != undefined) {
+                        arr.push(val);
+                    }
+                });
+                return arr;
+            }
             this.from_id = this.$route.params.from_id;
             this.to_id = this.$route.params.to_id;
             this.ws = io.connect("ws://localhost:3001");
-            //接收数据 1创建dom
-
-//            this.ws.on("msg",function(data){
-//                console.log(data);
-//            });
-//            this.ws.on("connected",function(data){
-//                console.log(data);
-//            });
             this.ws.on("connecting",function(data){
                 console.log('连接中...');
             });
@@ -75,18 +71,31 @@
                 let res = {};
                 res.from_id = this.from_id;
                 res.to_id = this.to_id;
-                this.ws.emit('msg', res);
+                this.ws.emit('setList', res);
 
             });
+            this.ws.on("sendList",(data)=>{
+//                console.log('接受List');
+//                console.log(data.notempty());
+            });
             this.ws.on("receive_message",(data)=>{
-                console.log('接受成功');
                 console.log(data);
+            });
+            this.ws.on("leave",(data)=>{
+                console.log(data);
+            });
 
 
+
+
+            this.ws.on('disconnect', function() {
+                console.log("与服务其断开");
             });
             this.ws.on("connect_failed",function(data){
                 console.log('连接失败');
             });
+
+
         }
     }
 </script>

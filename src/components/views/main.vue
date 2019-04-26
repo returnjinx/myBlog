@@ -124,6 +124,7 @@
                             this.$store.commit('setMusicList', data.playlist.tracks);
                             this.$store.commit('setMusic', data.playlist.tracks[0].id);
                             this.$store.commit('change',0);
+                            this.$store.commit('setSocket');
                             this.num = this.$store.state.playIndex;
                             this.listen()
                         }).catch((error) => {

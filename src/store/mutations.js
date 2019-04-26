@@ -26,6 +26,15 @@ const mutations = {
     },
     change:(state,index)=> {
         state.playIndex=index;
+    },
+    setSocket(state){
+        state.ws = io.connect("ws://localhost:3001");
+        state.ws.on("connected",(data)=>{
+            console.log('连接成功');
+            console.log(data);
+
+
+        });
     }
 
 }

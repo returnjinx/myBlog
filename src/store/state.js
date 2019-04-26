@@ -8,6 +8,7 @@ const state = {
     musicList:[],
     playIndex:'',
     play_url:'',
+    ws:'',
 }
 
 
