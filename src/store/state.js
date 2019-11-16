@@ -3,12 +3,14 @@
  */
 
 const state = {
-    username:'',
-    bgmControl:false,
+    user_name:'',
+    user_id:'',
     musicList:[],
     playIndex:'',
     play_url:'',
     ws:'',
+    onlineList:null,
+    onlineArray:[]
 }
 
 

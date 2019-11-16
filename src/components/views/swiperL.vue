@@ -39,7 +39,6 @@
             const url = 'http://hellojinx.cn:4000/banner';
             fetch(url).then(response => {
                 response.json().then((data) => {
-                    console.log(data)
                     this.bannerList = data.banners;
                 }).catch((error) => {
                     console.log(error)
@@ -68,7 +67,7 @@
     #swiperL{
         width: 100%;
         height: auto;
-        margin-top: 1rem;
+        /*margin-top: 1rem;*/
         .swiper-container{
             width: 100%;
             height: auto;

@@ -154,6 +154,7 @@
             canvasDataURL(path, obj, callback){
                 var img = new Image();
                 img.src = path;
+                var self = this;
                 img.onload = function(){
                     var that = this;
                     // 默认按比例压缩
@@ -168,24 +169,79 @@
                     var ctx = canvas.getContext('2d');
                     // 创建属性节点
                     var anw = document.createAttribute("width");
-                    if(w>400){
-                        var bl = (400/w);
-                        w=400;
-                        h=h*bl;
-                    }
+//                    if(w>400){
+//                        var bl = (400/w);
+//                        w=400;
+//                        h=h*bl;
+//                    }
                     anw.nodeValue = w;
                     var anh = document.createAttribute("height");
                     anh.nodeValue = h;
-                    console.log(anw,anh)
+
                     canvas.setAttributeNode(anw);
                     canvas.setAttributeNode(anh);
-                    ctx.drawImage(that, 0, 0, w, h);
+
                     // 图像质量
                     if(obj.quality && obj.quality <= 1 && obj.quality > 0){
                         quality = obj.quality;
                     }
                     // quality值越小，所绘制出的图像越模糊
-                    var base64 = canvas.toDataURL(this.type,quality);
+                    var base64 = canvas.toDataURL('image/jpeg',quality);
+
+
+                    EXIF.getData(img,function () {
+                        var orientation = EXIF.getTag(this,'Orientation');
+                        // orientation = 6;//测试数据
+                        console.log('orientation:'+orientation);
+                        switch (orientation){
+                            //正常状态
+                            case 1:
+                                console.log('旋转0°');
+
+                                break;
+                            //旋转90度
+                            case 6:
+                                console.log('旋转90°');
+                                canvas.height = w;
+                                canvas.width =h;
+                                ctx.rotate(Math.PI/2);
+                                ctx.translate(0,-h);
+
+                                ctx.drawImage(img,0,0)
+//                                base64 = canvas.toDataURL('image/jpeg',quality);
+                                break;
+                            //旋转180°
+                            case 3:
+                                console.log('旋转180°');
+                                canvas.height = h;
+                                canvas.width = w;
+                                ctx.rotate(Math.PI);
+                                ctx.translate(-w,-h);
+
+//                                ctx.drawImage(img,0,0)
+//                                var base64 = canvas.toDataURL('image/jpeg',quality);
+                                break;
+                            //旋转270°
+                            case 8:
+                                console.log('旋转270°');
+                                canvas.height = w;
+                                canvas.width = h;
+                                ctx.rotate(-Math.PI/2);
+                                ctx.translate(-h,0);
+
+//                                ctx.drawImage(image,0,0)
+//                                base64 = canvas.toDataURL('image/jpeg',quality);
+                                break;
+                            //undefined时不旋转
+                            case undefined:
+                                console.log('undefined  不旋转');
+                                break;
+                        }
+                        ctx.fillStyle = "#fff";
+                        ctx.fillRect(0, 0, w, h);
+                        ctx.drawImage(that, 0, 0, w, h);
+                        base64 = canvas.toDataURL('image/jpeg',quality);
+                    })
                     // 回调函数返回base64的值
                     callback(base64);
                 }
@@ -241,8 +297,7 @@
 
                 if(this.msg!=''){
                     this.axios.post('/commitmood',fd,{
-                        onUploadProgress: (progressEvent) => {      //这里要用箭头函数
-                            //不然这个this的指向会有问题
+                        onUploadProgress: (progressEvent) => {
                             this.rate = parseInt((  progressEvent.loaded / progressEvent.total  ) * 100);
                             console.log(this.rate)
                         }
@@ -252,7 +307,13 @@
                             Toast({
                                 message: res.data.message,
                             })
+                            let t = setTimeout(()=>{
+                                this.$router.replace('/main')
+                                clearTimeout(t)
+                            },3000)
+
                         }else{
+
                             Toast({
                                 message: res.data.message,
                             })

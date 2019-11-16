@@ -5,8 +5,9 @@
 import axios from 'axios';
 // import qiniu from 'qiniu';
 const mutations = {
-    setUserName:(state,name)=>{
-        state.username=name;
+    setUserInfo:(state,info)=>{
+        state.user_name=info.username;
+        state.user_id=info.user_id;
     },
 
     setMusicList:(state,list)=>{
@@ -28,12 +29,48 @@ const mutations = {
         state.playIndex=index;
     },
     setSocket(state){
-        state.ws = io.connect("ws://localhost:3001");
+        // state.ws = io.connect("ws://localhost:3001");
+        // state.ws.on("connected",(data)=>{
+        //     console.log('连接成功');
+        //
+        //
+        // });
+
+        state.ws = io.connect("ws://192.168.0.241:3001");
+        state.ws.on("connecting",function(data){
+            // console.log('连接中...');
+        });
         state.ws.on("connected",(data)=>{
             console.log('连接成功');
+
+            let res = {};
+            res.user_id = state.user_id;
+            res.user_name = state.user_name;
+            state.ws.emit('setList', res);
+
+        });
+        state.ws.on("sendList",(data)=>{
+//                console.log('接受List');
             console.log(data);
+            state.onlineList = data;
+            state.onlineArray  = Object.keys(data)
+        });
+        state.ws.on("receive_message",(data)=>{
+            console.log(data);
+        });
+        state.ws.on("leave",(data)=>{
+            console.log(data);
+            state.onlineList = data;
+        });
 
 
+
+
+        state.ws.on('disconnect', function() {
+            console.log("与服务其断开");
+        });
+        state.ws.on("connect_failed",function(data){
+            console.log('连接失败');
         });
     }
 

@@ -1,10 +1,14 @@
 <template>
     <div id="moodList">
-        <div class="list" v-for="i,index in list">
+        <div class="list clearfix" v-for="i,index in list">
             <span class="name">{{i.username}}</span>
             <span class="content">{{i.msg}}</span>
+            <div class="imgBox"><img :src="imgUrl+i.imgUrl" alt=""></div>
+
+            <span class="city" v-if="i.city!='null'">{{i.city}}</span>
+
+
             <span class="time">{{i.time}}</span>
-            <span class="city">{{i.city}}</span>
         </div>
 
     </div>
@@ -13,8 +17,48 @@
     #moodList{
         .list{
             width: 100%;
-            height: 1.3rem;
+            min-height: 1.3rem;
             border-bottom: 1px  solid #eee;
+            padding: .3rem .24rem .2rem;
+            box-sizing: border-box;
+            &:last-of-type{
+                border-bottom:0;
+            }
+            .name{
+                font-size: .3rem;
+                font-weight: bold;
+                display: block;
+                color: #26a2ff;
+
+            }
+            .content{
+                font-size: .24rem;
+                font-weight: bold;
+                display: block;
+                width: 100%;
+                color: #333;
+                margin-bottom: .2rem;
+            }
+            .time{
+                font-size: .2rem;
+                display: block;
+                color: #999;
+                float: right;
+            }
+            .city{
+                font-size: .2rem;
+                display: block;
+                color: #999;
+                float: left;
+            }
+            .imgBox{
+                width: 3.5rem;
+                height: 3.5rem;
+                >img{
+                    height: 100%;
+                    width: auto;
+                }
+            }
         }
     }
 </style>
@@ -29,10 +73,12 @@
         //引用的组件
         components: {},
         //方法
-        methods: {},
+        methods: {
+
+        },
         //生命周期
         created(){
-            this.axios.get('/getMoodList?page=1&pagesize=1').then((res)=>{
+            this.axios.get('/getMoodList?page=1&pagesize=10').then((res)=>{
                 console.log(res)
                 if(res.data.status=='ok'){
                     this.list = res.data.data;

@@ -13,6 +13,7 @@ import moodList from './views/moodList.vue';
 import upload from './views/upload.vue';
 import friend from './views/friend.vue';
 import chat from './views/chat.vue';
+import onLine from './views/onLine.vue';
 
 
 export default {
@@ -25,6 +26,7 @@ export default {
     moodList,
     upload,
     friend,
+    onLine,
     chat
 }
 

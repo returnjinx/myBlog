@@ -66,12 +66,17 @@
     export default{
         //数据处理
         data(){
-            return {}
+            return {
+                game:null,
+            }
         },
         //引用的组件
         components: {},
         //方法
         methods: {},
+        beforeDestroy(){
+            this.game.destroy()
+        },
         //生命周期
         created(){
             // 分数
@@ -509,6 +514,7 @@
             game.state.add('over', game.States.over);
 
             game.state.start('boot');
+            this.game=game
         },
         computed: {},
         mounted(){
