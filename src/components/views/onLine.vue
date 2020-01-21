@@ -1,14 +1,16 @@
 <template>
     <div id="onLine">
         <div v-if="$store.state.onlineArray.length>1">
+            <div> 在线列表</div>
             <div v-for="v,k,index in $store.state.onlineList" @click="enterRoom(v.user_id)" v-if="v.user_id!=$store.state.user_id" class="list">
                 <span>{{v.user_name}}</span>
             </div>
         </div>
         <div class="text" v-if="$store.state.onlineArray.length==1">
-            没有其他人在线，看来只有你这么无聊来看我了~<br/>先去打一会飞机吧
+            没有其他人在线，看来只有你这么无聊来看我了~<br/>
+            <!--先去打一会飞机吧-->
         </div>
-        <div class="btn" @click="goPlay()">打飞机走起</div>
+        <!--<div class="btn" @click="goPlay()">打飞机走起</div>-->
 
     </div>
 </template>
@@ -37,7 +39,7 @@
                         message: '这么无聊吗？和自己聊天',
                     })
                 }else{
-                    this.$router.push('/chat/'+this.$store.state.user_id+'/'+to_id)
+                    this.$router.replace('/chat/'+this.$store.state.user_id+'/'+to_id)
                 }
             },
         },

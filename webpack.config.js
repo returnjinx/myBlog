@@ -5,8 +5,8 @@ var HtmlWebpackPlugin=require("html-webpack-plugin");
 module.exports = {
     entry: './src/main.js',
     output: {
-        path: path.resolve(__dirname, './jinx/myblog'),
-        publicPath: '/jinx/myblog/',
+        path: path.resolve(__dirname, './blog'),
+        publicPath: '/blog/',
         // filename: 'build.js',
         filename: 'build.js',
         // chunkFilename:"js/[name].js"

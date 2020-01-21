@@ -76,7 +76,7 @@
                 musicShow:false,
                 num:'',
                 src:'',
-                selected:'说说',
+                selected:'首页',
             }
         },
         //引用的组件
@@ -84,7 +84,7 @@
         //方法
         methods: {
             pushMood(){
-                this.$router.push('/mood')
+                this.$router.replace('/mood')
             },
             close(){
                 this.musicEffect=false;
@@ -143,11 +143,8 @@
                     if(!this.$store.state.onlineList){
                         this.$store.commit('setSocket');
                     }
+
                     const url = 'http://hellojinx.cn:4000/top/list?idx=1';
-                    // fetch(url).then((res)=> {
-                    //     let list = res.json()
-                    //     console.log(list)
-                    // })
                     fetch(url).then(response => {
                         response.json().then((data) => {
                             if(this.$store.state.play_url==''){
@@ -197,12 +194,14 @@
         width: 100%;
         height: 100vh;
         background: #fff;
-        position: relative;
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*left: 0;*/
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 1.3rem;
         .mint-header{
-            position: fixed;
+            position: absolute;
             top:0;
             left: 0;
             width: 100%;
@@ -211,9 +210,9 @@
             font-size: .3rem;
         }
         .mint-tabbar{
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            /*position: fixed;*/
+            /*bottom: 0;*/
+            /*left: 0;*/
         }
         .music{
             width: .5rem;

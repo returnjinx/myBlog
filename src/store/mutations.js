@@ -35,8 +35,7 @@ const mutations = {
         //
         //
         // });
-
-        state.ws = io.connect("ws://192.168.0.241:3001");
+        state.ws = io.connect(window.socket_url);
         state.ws.on("connecting",function(data){
             // console.log('连接中...');
         });

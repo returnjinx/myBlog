@@ -22,12 +22,25 @@ Vue.use(MuseUI);
 
 Vue.use(Mint);
 import axios from 'axios';
-Vue.prototype.imgUrl="http://127.0.0.1:3000";
+
 axios.defaults.withCredentials=true;  //跨域保存session有用
-axios.defaults.baseURL="http://192.168.0.241:3000";
 // axios.defaults.baseURL="http://192.168.0.241:3000";
 // axios.defaults.baseURL="http://hellojinx.cn:3000/" ;
 
+
+window.socket_url = "ws://192.168.0.241:3001"
+if(  window.location.href.indexOf('hellojinx.cn')!=-1){
+    window.mode='API'
+    window.socket_url = "ws://hellojinx.cn:3001"
+    Vue.prototype.imgUrl="http://hellojinx.cn:3000";
+    axios.defaults.baseURL="http://hellojinx.cn:3000/" ;
+}else{
+    window.mode='DEV'
+    Vue.prototype.imgUrl="http://127.0.0.1:3000";
+    window.socket_url = "ws://192.168.0.241:3001"
+    axios.defaults.baseURL="http://192.168.0.241:3000";
+
+}
 
 Vue.prototype.axios=axios;
 const app = new Vue({

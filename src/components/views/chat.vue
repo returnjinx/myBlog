@@ -2,7 +2,12 @@
     <div id="chat">
         <!--<mt-header title="发表心情"></mt-header>-->
 
+        <mt-header title="敬请期待">
+            <div slot="left">
+                <mt-button @click.native="$router.replace('/main')">返回</mt-button>
+            </div>
 
+        </mt-header>
 
         <input class="input" v-model="message" type="text" maxlength="14" />
         <button id="bbb" @click="send()">点击发送消息</button>

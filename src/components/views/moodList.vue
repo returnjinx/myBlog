@@ -3,7 +3,7 @@
         <div class="list clearfix" v-for="i,index in list">
             <span class="name">{{i.username}}</span>
             <span class="content">{{i.msg}}</span>
-            <div class="imgBox"><img :src="imgUrl+i.imgUrl" alt=""></div>
+            <div class="imgBox" v-if="i.imgUrl!='null'"><img :src="imgUrl+i.imgUrl" alt=""></div>
 
             <span class="city" v-if="i.city!='null'">{{i.city}}</span>
 
@@ -57,6 +57,7 @@
                 >img{
                     height: 100%;
                     width: auto;
+
                 }
             }
         }
@@ -74,6 +75,7 @@
         components: {},
         //方法
         methods: {
+
 
         },
         //生命周期
