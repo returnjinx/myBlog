@@ -1,149 +1,275 @@
 <template>
-    <div id="chat">
-        <!--<mt-header title="发表心情"></mt-header>-->
+  <div id="chat">
+    <!--<mt-header title="发表心情"></mt-header>-->
 
-        <mt-header title="敬请期待">
-            <div slot="left">
-                <mt-button @click.native="$router.replace('/main')">返回</mt-button>
-            </div>
-
-        </mt-header>
-
-        <input class="input" v-model="message" type="text" maxlength="14" />
-        <button id="bbb" @click="send()">点击发送消息</button>
+    <mt-header :title="`与${toName}的聊天`">
+      <div slot="left">
+        <mt-button @click.native="$router.replace('/main')">返回</mt-button>
+      </div>
+    </mt-header>
+    <div class="msgBox">
+      <div class="scrollBox" ref="allH">
+        <div class="contentBox" ref="conH">
+          <div
+            v-for="(i, index) in msgList"
+            :key="index"
+            class=" clearfix"
+            :class="i.from_id == from_id ? 'myselfBox' : 'youselfBox'"
+          >
+            <span :class="i.from_id == from_id ? 'my_content' : 'you_content'">
+              {{ i.message }}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="sendBar">
+      <input
+        @focus="upInput('ipt')"
+        @blur="downInput()"
+        id="ipt"
+        class="input"
+        v-model="message"
+        type="text"
+      />
+      <button id="snedBtn" @click="send()">发送</button>
+    </div>
+  </div>
 </template>
-<style lang="less">
-    #chat{
 
-    }
-</style>
 <script>
-    import { Toast} from 'mint-ui';
-    export default{
-        //数据处理
-        data(){
-            return {
-                user_name:'',
-                user_id:'',
-                message:'',
-                from_id:'',
-                to_id:'',
-                send_token:'',
-                receive_token:'',
-                ws:'',
-            }
-        },
-        //引用的组件
-        components: {},
-        //方法
-        methods: {
-            send(){
-
-                if(this.message!=''){
-                    let res = {};
-                    res.from_id = this.from_id;
-                    res.to_id = this.to_id;
-                    res.message = this.message;
-                    // res.socket_id = this.$store.state.ws.id
-
-
-                    Object.keys(this.$store.state.onlineList).forEach((key)=>{
-                        if(this.$store.state.onlineList[key].user_id ==this.to_id ){
-                            res.socket_id = this.$store.state.onlineList[key].socket_id
-                        }
-
-                    });
-                    this.$store.state.ws.emit('new_message',res)
-                }else{
-                    Toast({
-                        message: '请输入信息',
-                    })
-                }
-            }
-        },
-        //生命周期
-        created(){
-            this.from_id = this.$route.params.from_id;
-            this.to_id = this.$route.params.to_id;
-            this.axios.get('/checkLogin').then( (res) =>{
-//                console.log(res)
-                if(res.data.status==1){
-                    this.is_online=1
-                    // sessionStorage.setItem('username',res.data.username);
-                    // this.$router.replace('/main');
-                    this.username=res.data.username;
-                    let Vuex_userInfo = {};
-                    Vuex_userInfo.username = res.data.username;
-                    Vuex_userInfo.user_id = res.data.user_id;
-                    this.$store.commit('setUserInfo',Vuex_userInfo);
-
-
-                    if(!this.$store.state.onlineList){
-                        this.$store.commit('setSocket');
-                    }
-
-                }else{
-                    this.$router.replace('/login');
-                    sessionStorage.removeItem('username');
-                }
-            }).catch(function (err) {
-
-            })
-        },
-        computed: {},
-        mounted(){
-            // Array.prototype.notempty = function() {
-            //     var arr = [];
-            //     this.map(function(val, index) {
-            //         //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
-            //         if (val !== "" && val != undefined) {
-            //             arr.push(val);
-            //         }
-            //     });
-            //     return arr;
-            // }
-            // this.from_id = this.$route.params.from_id;
-            // this.to_id = this.$route.params.to_id;
-            // this.ws = io.connect("ws://localhost:3001");
-            // this.ws.on("connecting",function(data){
-            //     console.log('连接中...');
-            // });
-            // this.ws.on("connected",(data)=>{
-            //     console.log('连接成功');
-            //     console.log(data);
-            //     // let res = {};
-            //     // res.from_id = this.from_id;
-            //     // res.to_id = this.to_id;
-            //     // this.ws.emit('setList', res);
-            //     let res = {};
-            //     res.user_id = this.user_id;
-            //     res.user_name = this.user_name;
-            //     this.ws.emit('setList', res);
-            //
-            // });
-            // this.ws.on("sendList",(data)=>{
-            //    console.log('接受List');
-            //    console.log(data.notempty());
-            // });
-            // this.ws.on("receive_message",(data)=>{
-            //     console.log(data);
-            // });
-            // this.ws.on("leave",(data)=>{
-            //     console.log(data);
-            // });
-            //
-            //
-            //
-            //
-            // this.ws.on('disconnect', function() {
-            //     console.log("与服务其断开");
-            // });
-            // this.ws.on("connect_failed",function(data){
-            //     console.log('连接失败');
-            // });
-
-
-        }
+import { Toast } from 'mint-ui'
+export default {
+  //数据处理
+  data() {
+    return {
+      toName: sessionStorage.getItem('toName'),
+      user_id: '',
+      message: '',
+      from_id: '',
+      to_id: '',
+      send_token: '',
+      receive_token: '',
+      ws: '',
+      msgList: []
     }
+  },
+  //引用的组件
+  components: {},
+  //方法
+  methods: {
+    ScrollTop(number = 0, time) {
+      if (!time) {
+        this.$refs.allH.scrollTop = document.documentElement.scrollTop = number
+        return number
+      }
+      const spacingTime = 20 // 设置循环的间隔时间  值越小消耗性能越高
+      let spacingInex = time / spacingTime // 计算循环的次数
+      let nowTop =
+        this.$refs.allH.scrollTop + document.documentElement.scrollTop // 获取当前滚动条位置
+      let everTop = (number - nowTop) / spacingInex // 计算每次滑动的距离
+      let scrollTimer = setInterval(() => {
+        if (spacingInex > 0) {
+          spacingInex--
+          this.ScrollTop((nowTop += everTop))
+        } else {
+          clearInterval(scrollTimer) // 清除计时器
+        }
+      }, spacingTime)
+    },
+    setScroll() {
+      this.$nextTick(() => {
+        let allH = this.$refs.allH.offsetHeight
+        let conH = this.$refs.conH.offsetHeight
+
+        console.log(allH, conH)
+        if (conH > allH) {
+          this.$refs.allH.scroll(0, conH + allH)
+          // this.ScrollTop(conH + allH, 2000000)
+        }
+      })
+    },
+    send() {
+      if (this.message != '') {
+        let res = {}
+        res.from_id = this.from_id
+        res.to_id = this.to_id
+        res.message = this.message
+        // res.socket_id = this.$store.state.ws.id
+
+        Object.keys(this.$store.state.onlineList).forEach(key => {
+          if (this.$store.state.onlineList[key].user_id == this.to_id) {
+            res.socket_id = this.$store.state.onlineList[key].socket_id
+          }
+        })
+        this.$store.state.ws.emit('new_message', res)
+        this.msgList.push(res)
+        this.message = ''
+        this.setScroll()
+      } else {
+        Toast({
+          message: '请输入信息'
+        })
+      }
+    },
+    upInput(ele) {
+      // this.err_ipt = ''
+      // 键盘调起需要时间延时处理，scrollIntoView是H5的api jquery没有这种方法要用原生获取元素
+      setTimeout(function() {
+        var element = document.getElementById(ele)
+        element.scrollIntoView()
+        element.scrollIntoView(false)
+        element.scrollIntoView({ block: 'end' })
+        element.scrollIntoView({
+          behavior: 'instant',
+          block: 'end',
+          inline: 'nearest'
+        })
+
+        //下面方法解释中 true 是在可视区域的顶部，但是在我实际使用中发现他是在可视区域的底部
+      }, 500)
+    },
+    downInput() {
+      let t = setTimeout(() => {
+        window.scroll(0, 0)
+        clearTimeout(t)
+      }, 200)
+    }
+  },
+  //生命周期
+  created() {
+    this.from_id = this.$route.params.from_id
+    this.to_id = this.$route.params.to_id
+    this.axios
+      .get('/checkLogin')
+      .then(res => {
+        //                console.log(res)
+        if (res.data.status == 1) {
+          this.is_online = 1
+          // sessionStorage.setItem('username',res.data.username);
+          // this.$router.replace('/main');
+          this.username = res.data.username
+          let Vuex_userInfo = {}
+          Vuex_userInfo.username = res.data.username
+          Vuex_userInfo.user_id = res.data.user_id
+          this.$store.commit('setUserInfo', Vuex_userInfo)
+
+          if (!this.$store.state.onlineList) {
+            this.$store.commit('setSocket')
+          }
+          this.$store.state.ws.on('receive_message', data => {
+            this.msgList.push(data)
+            this.setScroll()
+          })
+        } else {
+          this.$router.replace('/login')
+          sessionStorage.removeItem('username')
+        }
+      })
+      .catch(function(err) {})
+  },
+  computed: {},
+  mounted() {}
+}
 </script>
+<style lang="less">
+#chat {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  .mint-header {
+    z-index: 10;
+  }
+  .msgBox {
+    width: 100vw;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    padding: 40px 0 1.3rem;
+    box-sizing: border-box;
+    .scrollBox {
+      width: 100%;
+      height: 100%;
+      padding: 0.24rem;
+      box-sizing: border-box;
+      overflow-y: scroll;
+      .contentBox {
+        height: auto;
+        overflow: hidden;
+      }
+      .myselfBox {
+        width: 100%;
+        height: auto;
+        line-height: 0.4rem;
+        margin-bottom: 0.3rem;
+        .my_content {
+          max-width: 90%;
+          display: block;
+          color: #fff;
+          font-size: 0.3rem;
+          float: right;
+          padding: 0.24rem;
+          box-sizing: border-box;
+          background: #26a2ff;
+          border-radius: 0.08rem;
+        }
+      }
+      .youselfBox {
+        width: 100%;
+        height: auto;
+        line-height: 0.4rem;
+        margin-bottom: 0.3rem;
+        .you_content {
+          max-width: 90%;
+          display: block;
+          color: #222;
+          font-size: 0.3rem;
+          float: left;
+          padding: 0.24rem;
+          box-sizing: border-box;
+          background: #eee;
+          border-radius: 0.08rem;
+        }
+      }
+    }
+  }
+  .sendBar {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    height: 1.3rem;
+    width: 100vw;
+    padding: 0.15rem 2% 0;
+    box-sizing: border-box;
+    background: #f2f2f2;
+
+    .input {
+      width: 76%;
+      height: 1rem;
+      border-radius: 0.08rem 0 0 0.08rem;
+      box-sizing: border-box;
+      float: left;
+      padding: 0.24rem;
+      font-size: 0.24rem;
+      line-height: 0.65rem;
+    }
+    #snedBtn {
+      width: 24%;
+      height: 1rem;
+      background: #26a2ff;
+      border-radius: 0 0.08rem 0.08rem 0;
+      color: #fff;
+      float: right;
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+</style>
