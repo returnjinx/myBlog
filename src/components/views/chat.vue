@@ -8,8 +8,14 @@
       </div>
     </mt-header>
     <div class="msgBox">
-      <div class="scrollBox" ref="allH">
-        <div class="contentBox" ref="conH">
+      <div
+        class="scrollBox"
+        ref="allH"
+      >
+        <div
+          class="contentBox"
+          ref="conH"
+        >
           <div
             v-for="(i, index) in msgList"
             :key="index"
@@ -33,7 +39,10 @@
         v-model="message"
         type="text"
       />
-      <button id="snedBtn" @click="send()">发送</button>
+      <button
+        id="snedBtn"
+        @click="send()"
+      >发送</button>
     </div>
   </div>
 </template>
@@ -59,24 +68,18 @@ export default {
   components: {},
   //方法
   methods: {
-    ScrollTop(number = 0, time) {
-      if (!time) {
-        this.$refs.allH.scrollTop = document.documentElement.scrollTop = number
-        return number
+    newUpInput(ele) {
+      const input = document.getElementById(ele)
+      let interval
+
+      input.onfocus = () => {
+        interval = setInterval(() => {
+          input.scrollIntoViewIfNeeded()
+        }, 1000)
       }
-      const spacingTime = 20 // 设置循环的间隔时间  值越小消耗性能越高
-      let spacingInex = time / spacingTime // 计算循环的次数
-      let nowTop =
-        this.$refs.allH.scrollTop + document.documentElement.scrollTop // 获取当前滚动条位置
-      let everTop = (number - nowTop) / spacingInex // 计算每次滑动的距离
-      let scrollTimer = setInterval(() => {
-        if (spacingInex > 0) {
-          spacingInex--
-          this.ScrollTop((nowTop += everTop))
-        } else {
-          clearInterval(scrollTimer) // 清除计时器
-        }
-      }, spacingTime)
+      input.onblur = () => {
+        clearInterval(interval)
+      }
     },
     setScroll() {
       this.$nextTick(() => {
@@ -116,7 +119,7 @@ export default {
     upInput(ele) {
       // this.err_ipt = ''
       // 键盘调起需要时间延时处理，scrollIntoView是H5的api jquery没有这种方法要用原生获取元素
-      setTimeout(function() {
+      setTimeout(function () {
         var element = document.getElementById(ele)
         element.scrollIntoView()
         element.scrollIntoView(false)
@@ -167,10 +170,10 @@ export default {
           sessionStorage.removeItem('username')
         }
       })
-      .catch(function(err) {})
+      .catch(function (err) { })
   },
   computed: {},
-  mounted() {}
+  mounted() { }
 }
 </script>
 <style lang="less">

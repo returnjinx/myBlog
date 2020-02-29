@@ -49,63 +49,13 @@ export default {
       }
     }
   },
-  created() {
-    console.log(this.$store.state.onlineList)
-    // this.list = Object.keys(this.$store.state.onlineList)
-    //    console.log(res)
-    //     if (res.data.status == 1) {
-    //         // sessionStorage.setItem('username',res.data.username);
-    //         // this.$router.replace('/main');
-    //         this.user_name = res.data.username;
-    //         this.user_id = res.data.user_id;
-    //     }
-    // }).catch( (err) =>{
-    //
-    // })
-  },
+  created() {},
   computed: {},
   mounted() {
     this.$nextTick(() => {
       let audio = document.getElementById('audio')
       audio.play()
     })
-
-    // this.$store.commit('setSocket');
-    //             this.ws = io.connect("ws://192.168.0.241:3001");
-    //             this.ws.on("connecting",function(data){
-    //                 // console.log('连接中...');
-    //             });
-    //             this.ws.on("connected",(data)=>{
-    //                 console.log('连接成功');
-    //
-    //                 let res = {};
-    //                 res.user_id = this.user_id;
-    //                 res.user_name = this.user_name;
-    //                 this.ws.emit('setList', res);
-    //
-    //             });
-    //             this.ws.on("sendList",(data)=>{
-    // //                console.log('接受List');
-    //                console.log(data);
-    //                this.onlineList = data;
-    //             });
-    //             this.ws.on("receive_message",(data)=>{
-    //                 console.log(data);
-    //             });
-    //             this.ws.on("leave",(data)=>{
-    //                 console.log(data);
-    //                 this.onlineList = data;
-    //             });
-    //
-    //
-    //
-    //
-    //             this.ws.on('disconnect', function() {
-    //                 console.log("与服务其断开");
-    //             });
-    //             this.ws.on("connect_failed",function(data){
-    //                 console.log('连接失败');
-    //             });
   }
 }
 </script>
