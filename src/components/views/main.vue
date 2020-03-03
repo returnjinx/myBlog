@@ -83,8 +83,16 @@
         在线人数
       </mt-tab-item>
       <mt-tab-item id="我的">
-        <img v-if="selected != '我的'" slot="icon" src="../../img/user.png" />
-        <img v-if="selected == '我的'" slot="icon" src="../../img/i_user.png" />
+        <img
+          v-if="selected != '我的'"
+          slot="icon"
+          src="../../img/user.png"
+        />
+        <img
+          v-if="selected == '我的'"
+          slot="icon"
+          src="../../img/i_user.png"
+        />
         我的
       </mt-tab-item>
     </mt-tabbar>
@@ -137,7 +145,7 @@ export default {
             audio.pause()
           }
         })
-        .catch(function(err) {})
+        .catch(function (err) { })
     },
     listen() {
       // audio.removeEventListener("ended",this.listen,false);
@@ -208,7 +216,7 @@ export default {
           sessionStorage.removeItem('username')
         }
       })
-      .catch(function(err) {})
+      .catch(function (err) { })
   },
   computed: {},
   mounted() {
@@ -245,10 +253,14 @@ export default {
     /*bottom: 0;*/
     /*left: 0;*/
   }
+  .mint-header-title {
+    height: 1rem;
+    line-height: 1rem;
+  }
   .music {
     width: 0.5rem;
     height: 0.5rem;
-    background: url('../../img/musicIcon.png') no-repeat;
+    background: url("../../img/musicIcon.png") no-repeat;
     background-size: 100%;
     position: fixed;
     top: 1.2rem;

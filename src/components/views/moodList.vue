@@ -41,6 +41,7 @@
       font-weight: bold;
       display: block;
       color: #26a2ff;
+      margin-bottom: 0.3rem;
     }
     .content {
       font-size: 0.24rem;
@@ -65,6 +66,7 @@
     .imgBox {
       width: 3.5rem;
       height: 3.5rem;
+      margin-bottom: 0.3rem;
       > img {
         height: 100%;
         width: auto;
