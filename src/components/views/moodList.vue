@@ -1,28 +1,16 @@
 <template>
   <div id="moodList">
-    <div
-      class="list clearfix"
-      v-for="i,index in list"
-      :key="index"
-    >
-      <span class="name">{{i.username}}</span>
-      <span class="content">{{i.msg}}</span>
-      <div
-        class="imgBox"
-        v-if="i.imgUrl!='null'"
-      ><img
-          :src="imgUrl+i.imgUrl"
-          alt=""
-        ></div>
+    <div class="list clearfix" v-for="(i, index) in list" :key="index">
+      <span class="name">{{ i.username }}</span>
+      <span class="content">{{ i.msg }}</span>
+      <div class="imgBox" v-if="i.imgUrl != 'null'">
+        <img :src="imgUrl + i.imgUrl" alt="" />
+      </div>
 
-      <span
-        class="city"
-        v-if="i.city!='null'"
-      >{{i.city}}</span>
+      <span class="city" v-if="i.city != 'null'">{{ i.city }}</span>
 
-      <span class="time">{{i.time}}</span>
+      <span class="time">{{ i.time }}</span>
     </div>
-
   </div>
 </template>
 <style lang="less">
@@ -41,6 +29,7 @@
       font-weight: bold;
       display: block;
       color: #26a2ff;
+      margin-bottom: 0.2rem;
     }
     .content {
       font-size: 0.24rem;
@@ -65,6 +54,7 @@
     .imgBox {
       width: 3.5rem;
       height: 3.5rem;
+      margin-bottom: 0.2rem;
       > img {
         height: 100%;
         width: auto;
@@ -78,36 +68,32 @@ export default {
   //数据处理
   data() {
     return {
-      list: '',
+      list: ''
     }
   },
   //引用的组件
   components: {},
   //方法
-  methods: {
-
-
-  },
+  methods: {},
   //生命周期
   created() {
-    this.axios.get('/getMoodList?page=1&pagesize=10').then((res) => {
-      console.log(res)
-      if (res.data.status == 'ok') {
-        this.list = res.data.data;
-      } else {
-        Toast({
-          message: res.data.message,
-        })
-      }
-
-    }).catch((err) => {
-      console.log(err)
-    })
+    this.axios
+      .get('/getMoodList?page=1&pagesize=10')
+      .then(res => {
+        console.log(res)
+        if (res.data.status == 'ok') {
+          this.list = res.data.data
+        } else {
+          Toast({
+            message: res.data.message
+          })
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
   computed: {},
-  mounted() {
-
-
-  }
+  mounted() {}
 }
 </script>

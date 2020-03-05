@@ -8,14 +8,8 @@
       </div>
     </mt-header>
     <div class="msgBox">
-      <div
-        class="scrollBox"
-        ref="allH"
-      >
-        <div
-          class="contentBox"
-          ref="conH"
-        >
+      <div class="scrollBox" ref="allH">
+        <div class="contentBox" ref="conH">
           <div
             v-for="(i, index) in msgList"
             :key="index"
@@ -39,10 +33,7 @@
         v-model="message"
         type="text"
       />
-      <button
-        id="snedBtn"
-        @click="send()"
-      >发送</button>
+      <button id="snedBtn" @click="send()">发送</button>
     </div>
   </div>
 </template>
@@ -119,7 +110,7 @@ export default {
     upInput(ele) {
       // this.err_ipt = ''
       // 键盘调起需要时间延时处理，scrollIntoView是H5的api jquery没有这种方法要用原生获取元素
-      setTimeout(function () {
+      setTimeout(function() {
         var element = document.getElementById(ele)
         element.scrollIntoView()
         element.scrollIntoView(false)
@@ -170,10 +161,10 @@ export default {
           sessionStorage.removeItem('username')
         }
       })
-      .catch(function (err) { })
+      .catch(function(err) {})
   },
   computed: {},
-  mounted() { }
+  mounted() {}
 }
 </script>
 <style lang="less">
