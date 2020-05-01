@@ -11,83 +11,69 @@
       </div>
     </mt-header>
 
+    <div
+      class="music"
+      v-if="!musicEffect"
+      @click="
+            musicShow = true
+            musicEffect = true
+          "
+    ></div>
+
     <musicList
-      v-show="selected == '首页'"
       @close="close()"
       v-if="musicShow"
       class="animated"
       :class="musicEffect ? 'bounceInRight' : 'bounceOutRight'"
     ></musicList>
 
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="首页">
-        <!--<swiperL></swiperL>-->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+    <div class="tabBar">
+      <router-link
+        :to="'/main/home'"
+        tag="div"
+        active-class="active"
+        replace
+        @click.native="chooseTab(0)"
+      >
+        <div class="icon home"></div>
+        <div class="tabName">首页</div>
+      </router-link>
+      <router-link
+        :to="'/main/moodList'"
+        tag="div"
+        active-class="active"
+        replace
+        @click.native="chooseTab(1)"
+      >
+        <div class="icon shuoshuo"></div>
+        <div class="tabName">说说</div>
 
-        <div
-          class="music"
-          v-if="!musicEffect"
-          @click="
-            musicShow = true
-            musicEffect = true
-          "
-        ></div>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="说说">
-        <moodList></moodList>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="在线人数">
-        <online v-if="is_online == 1"></online>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="我的">
-        <mt-cell title="敬请期待"></mt-cell>
-      </mt-tab-container-item>
-    </mt-tab-container>
-    <mt-tabbar v-model="selected">
-      <mt-tab-item id="首页">
-        <img
-          v-if="selected != '首页'"
-          slot="icon"
-          src="../../img/international.png"
-        />
-        <img
-          v-if="selected == '首页'"
-          slot="icon"
-          src="../../img/i_international.png"
-        />
-        首页
-      </mt-tab-item>
-      <mt-tab-item id="说说">
-        <img
-          v-if="selected != '说说'"
-          slot="icon"
-          src="../../img/social_server_fault.png"
-        />
-        <img
-          v-if="selected == '说说'"
-          slot="icon"
-          src="../../img/i_social_server_fault.png"
-        />
-        说说
-      </mt-tab-item>
-      <mt-tab-item id="在线人数">
-        <img
-          v-if="selected != '在线人数'"
-          slot="icon"
-          src="../../img/sub_account.png"
-        />
-        <img
-          v-if="selected == '在线人数'"
-          slot="icon"
-          src="../../img/i_sub_account.png"
-        />
-        在线人数
-      </mt-tab-item>
-      <mt-tab-item id="我的">
-        <img v-if="selected != '我的'" slot="icon" src="../../img/user.png" />
-        <img v-if="selected == '我的'" slot="icon" src="../../img/i_user.png" />
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
+      </router-link>
+      <router-link
+        :to="'/main/online'"
+        tag="div"
+        active-class="active"
+        replace
+        @click.native="chooseTab(2)"
+      >
+        <div class="icon online"></div>
+        <div class="tabName">在线人数</div>
+      </router-link>
+      <router-link
+        :to="'/main'"
+        tag="div"
+        active-class="active"
+        replace
+        @click.native="chooseTab(3)"
+      >
+        <div class="icon me"></div>
+        <div class="tabName">我的</div>
+      </router-link>
+    </div>
+
   </div>
 </template>
 
@@ -109,13 +95,22 @@ export default {
       musicShow: false,
       num: '',
       src: '',
-      selected: '首页'
+      selected: '首页',
+      itemList: [
+        '首页',
+        '说说',
+        '在线人数',
+        '我的',
+      ]
     }
   },
   //引用的组件
   components: { musicList, swiperL, moodList, online },
   //方法
   methods: {
+    chooseTab(type) {
+      this.selected = this.itemList[type]
+    },
     pushMood() {
       this.$router.replace('/mood')
     },
@@ -137,7 +132,7 @@ export default {
             audio.pause()
           }
         })
-        .catch(function(err) {})
+        .catch(function (err) { })
     },
     listen() {
       // audio.removeEventListener("ended",this.listen,false);
@@ -208,7 +203,7 @@ export default {
           sessionStorage.removeItem('username')
         }
       })
-      .catch(function(err) {})
+      .catch(function (err) { })
   },
   computed: {},
   mounted() {
@@ -224,9 +219,6 @@ export default {
   width: 100%;
   height: 100vh;
   background: #fff;
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*left: 0;*/
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 1.3rem;
@@ -240,15 +232,73 @@ export default {
     height: 1rem;
     font-size: 0.3rem;
   }
-  .mint-tabbar {
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
+  .tabBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #f2f2f2;
+    background: #fff;
+    > div {
+      flex: 1;
+      .icon {
+        width: 0.48rem;
+        height: 0.48rem;
+        margin: 0 auto 0.05rem;
+        &.home {
+          background: url("../../img/international.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.shuoshuo {
+          background: url("../../img/social_server_fault.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.online {
+          background: url("../../img/sub_account.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.me {
+          background: url("../../img/user.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .tabName {
+        font-size: 0.24rem;
+        text-align: center;
+      }
+    }
+    .router-link-exact-active {
+      .icon {
+        &.home {
+          background: url("../../img/i_international.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.shuoshuo {
+          background: url("../../img/i_social_server_fault.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.online {
+          background: url("../../img/i_sub_account.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.me {
+          background: url("../../img/i_user.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+
+      .tabName {
+        color: #26a2ff;
+      }
+    }
   }
   .music {
     width: 0.5rem;
     height: 0.5rem;
-    background: url('../../img/musicIcon.png') no-repeat;
+    background: url("../../img/musicIcon.png") no-repeat;
     background-size: 100%;
     position: fixed;
     top: 1.2rem;

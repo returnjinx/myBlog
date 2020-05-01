@@ -226,3 +226,11 @@ html {
     top: 0.4rem !important;
   }
 }
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.2s ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}

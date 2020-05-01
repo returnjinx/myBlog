@@ -8,7 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, './blog'),
     publicPath: '/blog/',
     // filename: 'build.js',
-    filename: 'build.js'
+    filename: 'build.js',
     // chunkFilename:"js/[name].js"
   },
   module: {
@@ -20,52 +20,52 @@ module.exports = {
           loaders: {
             css: ExtractTextPlugin.extract({
               loader: 'css-loader!postcss-loader',
-              fallbackLoader: 'vue-style-loader'
+              fallbackLoader: 'vue-style-loader',
             }),
             less: ExtractTextPlugin.extract({
               loader: 'css-loader!postcss-loader!less-loader',
-              fallbackLoader: 'vue-style-loader'
-            })
-          }
-        }
+              fallbackLoader: 'vue-style-loader',
+            }),
+          },
+        },
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(mp3)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          name: 'assets/[name].[hash:7].[ext]'
-        }
+          name: 'assets/[name].[hash:7].[ext]',
+        },
       },
       {
         test: /\.(png|jpg|gif|jpeg)$/,
         loader: 'url-loader',
         query: {
           limit: 1000,
-          name: 'images/[name].[ext]?[hash]'
-        }
+          name: 'images/[name].[ext]?[hash]',
+        },
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
         loader: 'url-loader',
         query: {
           limit: 1000,
-          name: 'fonts/[name].[ext]?[hash]'
-        }
+          name: 'fonts/[name].[ext]?[hash]',
+        },
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loader: 'style-loader!css-loader!postcss-loader',
         /*ExtractTextPlugin.extract({
                  fallbackLoader: "style-loader",
                  loader: "css-loader!postcss-loader"
                  })*/
-      }
-    ]
+      },
+    ],
   },
   plugins: [
     // new ExtractTextPlugin("css/style.css"),
@@ -74,27 +74,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: true,
       template: 'index-build.html',
-      title: 'Hello丶Jinx'
-    })
+      title: 'Hello丶Jinx',
+    }),
     // new webpack.optimize.CommonsChunkPlugin({name:'index2',filename:'js/index2.js'})
   ],
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.common.js'
-    }
+      vue$: 'vue/dist/vue.common.js',
+    },
   },
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    host: '192.168.0.241',
-    port: 8077
+    host: '192.168.0.52',
+    port: 8077,
     // historyApiFallback: true,
     // hot: true ,
     // host:'192.168.0.137',
     // inline: true,
     // progress: true
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -103,19 +103,19 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
-      }
+        NODE_ENV: '"production"',
+      },
     }),
     new webpack.optimize.UglifyJsPlugin({
       // sourceMap: true,
       compress: {
         warnings: false,
         drop_console: true,
-        pure_funcs: ['console.log']
-      }
+        pure_funcs: ['console.log'],
+      },
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+      minimize: true,
+    }),
   ])
 }

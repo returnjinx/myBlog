@@ -27,13 +27,30 @@
           />
         </div>
 
-        <div @click="getLocation()" class="btn locationBtn"></div>
-        <span class="city" v-if="city == ''">遥远的Ta</span>
-        <span class="city" v-if="city != ''">{{ city }}</span>
+        <div
+          @click="getLocation()"
+          class="btn locationBtn"
+        ></div>
+        <span
+          class="city"
+          v-if="city == ''"
+        >遥远的Ta</span>
+        <span
+          class="city"
+          v-if="city != ''"
+        >{{ city }}</span>
       </div>
     </div>
-    <div v-if="loadPic" class="imgbox">
-      <img class="pic" :class="picStatus ? 'h' : 's'" :src="dataURl" alt="" />
+    <div
+      v-if="loadPic"
+      class="imgbox"
+    >
+      <img
+        class="pic"
+        :class="picStatus ? 'h' : 's'"
+        :src="dataURl"
+        alt=""
+      />
     </div>
   </div>
 </template>
@@ -73,14 +90,14 @@
         &.locationBtn {
           width: 0.4rem;
           height: 0.4rem;
-          background: url('../../img/dw.png') no-repeat;
+          background: url("../../img/dw.png") no-repeat;
           background-size: 100%;
           right: 0.24rem;
         }
         &.cameraBtn {
           width: 0.48rem;
           height: 0.48rem;
-          background: url('../../img/xj.png') no-repeat;
+          background: url("../../img/xj.png") no-repeat;
           background-size: 100%;
           left: 0.24rem;
           #file {
@@ -168,7 +185,7 @@ export default {
       var img = new Image()
       img.src = path
       var self = this
-      img.onload = function() {
+      img.onload = function () {
         var that = this
         // 默认按比例压缩
         var w = that.width,
@@ -182,11 +199,6 @@ export default {
         var ctx = canvas.getContext('2d')
         // 创建属性节点
         var anw = document.createAttribute('width')
-        //                    if(w>400){
-        //                        var bl = (400/w);
-        //                        w=400;
-        //                        h=h*bl;
-        //                    }
         anw.nodeValue = w
         var anh = document.createAttribute('height')
         anh.nodeValue = h
@@ -201,7 +213,8 @@ export default {
         // quality值越小，所绘制出的图像越模糊
         var base64 = canvas.toDataURL('image/jpeg', quality)
 
-        EXIF.getData(img, function() {
+
+        EXIF.getData(img, function () {
           var orientation = EXIF.getTag(this, 'Orientation')
           // orientation = 6;//测试数据
           console.log('orientation:' + orientation)
@@ -346,8 +359,8 @@ export default {
     }
   },
   //生命周期
-  created() {},
+  created() { },
   computed: {},
-  mounted() {}
+  mounted() { }
 }
 </script>
