@@ -223,6 +223,10 @@ export default {
   -webkit-overflow-scrolling: touch;
   padding-bottom: 1.3rem;
   box-sizing: border-box;
+  .mint-header-title {
+    height: 100%;
+    line-height: 1rem;
+  }
   .mint-header {
     position: absolute;
     top: 0;
@@ -242,6 +246,7 @@ export default {
     align-items: center;
     border-top: 1px solid #f2f2f2;
     background: #fff;
+    box-sizing: border-box;
     > div {
       flex: 1;
       .icon {

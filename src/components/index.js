@@ -8,7 +8,7 @@ import home from './home/home.vue'
 import login from './views/login.vue'
 import register from './views/register.vue'
 import foot from './views/foot.vue'
-// import plane from './views/plane.vue';
+import plane from './views/plane.vue'
 import mood from './views/mood.vue'
 import moodList from './views/moodList.vue'
 // import upload from './views/upload.vue';
@@ -23,7 +23,7 @@ export default {
   login,
   register,
   foot,
-  // plane,
+  plane,
   mood,
   moodList,
   // upload,

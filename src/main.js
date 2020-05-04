@@ -18,7 +18,7 @@ import {
   TabContainer,
   TabContainerItem,
   Cell,
-  Field
+  Field,
 } from 'mint-ui'
 Vue.component(Header.name, Header)
 Vue.component(Tabbar.name, Tabbar)
@@ -33,8 +33,10 @@ if (!window.Promise) {
   window.Promise = Promise
 }
 
-import axios from 'axios'
-
+// import axios from 'axios'
+import config from './common/js/config.js'
+var axios = config.axios
+var $http = config.api
 axios.defaults.withCredentials = true //跨域保存session有用
 // axios.defaults.baseURL="http://192.168.0.241:3000";
 // axios.defaults.baseURL="http://hellojinx.cn:3000/" ;
@@ -51,19 +53,19 @@ if (window.location.href.indexOf('hellojinx.cn') != -1) {
   window.socket_url = 'ws://127.0.0.1:3001'
   axios.defaults.baseURL = 'http://127.0.0.1:3000'
 }
-
+Vue.prototype.$http = $http
 Vue.prototype.axios = axios
 const app = new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   store,
-  index
+  index,
 })
 
 app.$mount('#app')
 
 var browser = {
-  versions: (function() {
+  versions: (function () {
     var u = navigator.userAgent,
       app = navigator.appVersion
     return {
@@ -77,10 +79,10 @@ var browser = {
       android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
       iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
       iPad: u.indexOf('iPad') > -1, //是否iPad
-      webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+      webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
     }
   })(),
-  language: (navigator.browserLanguage || navigator.language).toLowerCase()
+  language: (navigator.browserLanguage || navigator.language).toLowerCase(),
 }
 if (browser.versions.ios) {
   Vue.prototype.inIos = true

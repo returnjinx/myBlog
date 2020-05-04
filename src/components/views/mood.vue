@@ -54,96 +54,7 @@
     </div>
   </div>
 </template>
-<style lang="less">
-#mood {
-  width: 100vw;
-  height: 100vh;
-  background: #fff;
-  .mint-header {
-    height: 1rem;
-    line-height: 1rem;
-  }
-  .iptBox {
-    width: 100%;
-    height: 30%;
-    box-sizing: border-box;
-    #content {
-      width: 100%;
-      height: 80%;
-      background: #fff;
-      border: none;
-      resize: none;
-      padding: 0.24rem;
-      box-sizing: border-box;
-      border-bottom: 1px solid #eee;
-    }
-    .bottom {
-      width: 100%;
-      height: 20%;
-      position: relative;
-      border-bottom: 1px solid #eee;
-      .btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
 
-        &.locationBtn {
-          width: 0.4rem;
-          height: 0.4rem;
-          background: url("../../img/dw.png") no-repeat;
-          background-size: 100%;
-          right: 0.24rem;
-        }
-        &.cameraBtn {
-          width: 0.48rem;
-          height: 0.48rem;
-          background: url("../../img/xj.png") no-repeat;
-          background-size: 100%;
-          left: 0.24rem;
-          #file {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-          }
-        }
-      }
-      .city {
-        font-size: 0.24rem;
-        color: #222;
-        position: absolute;
-        right: 0.7rem;
-        top: 50%;
-        text-align: right;
-        transform: translateY(-50%);
-      }
-    }
-  }
-  .imgbox {
-    width: 2rem;
-    height: 2rem;
-    border: 1px dashed #26a2ff;
-    box-sizing: border-box;
-    margin: 0.24rem;
-    position: relative;
-    overflow: hidden;
-    img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      &.h {
-        width: auto;
-        height: 100%;
-      }
-      &.s {
-        width: 100%;
-        height: auto;
-      }
-    }
-  }
-}
-</style>
 <script>
 import { Toast } from 'mint-ui'
 export default {
@@ -335,13 +246,14 @@ export default {
           .then(res => {
             console.log(res)
             if (res.data.status == 'ok') {
+              this.$router.replace('/main/moodList')
               Toast({
                 message: res.data.message
               })
-              let t = setTimeout(() => {
-                this.$router.replace('/main')
-                clearTimeout(t)
-              }, 3000)
+              // let t = setTimeout(() => {
+              //   this.$router.replace('/main/moodList')
+              //   clearTimeout(t)
+              // }, 3000)
             } else {
               Toast({
                 message: res.data.message
@@ -364,3 +276,93 @@ export default {
   mounted() { }
 }
 </script>
+<style lang="less">
+#mood {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  .mint-header {
+    height: 1rem;
+    line-height: 1rem;
+  }
+  .iptBox {
+    width: 100%;
+    height: 30%;
+    box-sizing: border-box;
+    #content {
+      width: 100%;
+      height: 80%;
+      background: #fff;
+      border: none;
+      resize: none;
+      padding: 0.24rem;
+      box-sizing: border-box;
+      border-bottom: 1px solid #eee;
+    }
+    .bottom {
+      width: 100%;
+      height: 20%;
+      position: relative;
+      border-bottom: 1px solid #eee;
+      .btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.locationBtn {
+          width: 0.4rem;
+          height: 0.4rem;
+          background: url("../../img/dw.png") no-repeat;
+          background-size: 100%;
+          right: 0.24rem;
+        }
+        &.cameraBtn {
+          width: 0.48rem;
+          height: 0.48rem;
+          background: url("../../img/xj.png") no-repeat;
+          background-size: 100%;
+          left: 0.24rem;
+          #file {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+          }
+        }
+      }
+      .city {
+        font-size: 0.24rem;
+        color: #222;
+        position: absolute;
+        right: 0.7rem;
+        top: 50%;
+        text-align: right;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  .imgbox {
+    width: 2rem;
+    height: 2rem;
+    border: 1px dashed #26a2ff;
+    box-sizing: border-box;
+    margin: 0.24rem;
+    position: relative;
+    overflow: hidden;
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      &.h {
+        width: auto;
+        height: 100%;
+      }
+      &.s {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+</style>
