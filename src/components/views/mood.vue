@@ -20,7 +20,7 @@
           <input
             id="file"
             ref="file"
-            @change="change()"
+            @change="change1()"
             type="file"
             name="logo"
             accept="image/*"
@@ -70,7 +70,8 @@ export default {
       picStatus: true,
       loadPic: false,
       type: '',
-      fileName: ''
+      fileName: '',
+      result: {},
     }
   },
   //引用的组件
@@ -222,6 +223,83 @@ export default {
           //                    this.upLoad()
         }
       )
+    },
+    showBase64() {
+      this.file = this.$refs.file.files[0]
+      const windowURL = window.URL || window.webkitURL
+      this.dataURl = windowURL.createObjectURL(this.file)
+      let img = new Image()
+      img.src = this.dataURl
+      img.onload = () => {
+        this.loadPic = true
+        console.log(img.width)
+        console.log(img.height)
+        if (img.width >= img.height) {
+          this.picStatus = true
+        } else {
+          this.picStatus = false
+        }
+      }
+    },
+    change1() {
+      // this.showBase64()
+
+      var fileName
+      var domain = ''
+      var file = this.$refs.file.files[0]
+      fileName = 'image/' + file.name
+
+      //先获取上传token
+      this.$http.getuptoken().then(res => {
+        this.result = res
+        var token = this.result.uptoken
+        var domain = this.result.domain
+        var config = {
+          useCdnDomain: true,
+          disableStatisticsReport: false,
+          retryCount: 6,
+          region: qiniu.region.z2,
+        }
+        var putExtra = {
+          fname: '',
+          params: {},
+          mimeType: null,
+        }
+
+
+
+
+        var complete = (res) => {
+          let src = 'http://' + this.result.domain + '/' + fileName
+
+          this.file = src
+          this.dataURl = src
+          let img = new Image()
+          img.src = this.dataURl
+          img.onload = () => {
+            this.loadPic = true
+            console.log(img.width)
+            console.log(img.height)
+            if (img.width >= img.height) {
+              this.picStatus = true
+            } else {
+              this.picStatus = false
+            }
+          }
+          // $('#result').html('<img src=' + src + ' />')
+        }
+
+        var subObject = {
+          //                next: next,
+          //                error: error,
+          complete: complete,
+        }
+
+        var observable = qiniu.upload(file, fileName, token, putExtra, config)
+
+        var subscription = observable.subscribe(subObject)
+      })
+
     },
     commit() {
       var fd = new FormData() //创建form对象
