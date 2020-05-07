@@ -5,7 +5,7 @@
         <mt-button @click.native="$router.replace('/main')">取消</mt-button>
       </div>
       <div slot="right">
-        <mt-button @click.native="commit()">发表</mt-button>
+        <mt-button @click.native="new_commit()">发表</mt-button>
       </div>
     </mt-header>
     <div class="iptBox">
@@ -247,7 +247,8 @@ export default {
       var fileName
       var domain = ''
       var file = this.$refs.file.files[0]
-      fileName = 'image/' + file.name
+      let time = new Date().getTime()
+      fileName = 'image/' + time + '_' + file.name
 
       //先获取上传token
       this.$http.getuptoken().then(res => {
@@ -270,7 +271,7 @@ export default {
 
 
         var complete = (res) => {
-          let src = 'http://' + this.result.domain + '/' + fileName
+          let src = 'http://' + this.result.domain + fileName
 
           this.file = src
           this.dataURl = src
@@ -301,6 +302,44 @@ export default {
       })
 
     },
+    //新版上传七牛接口
+    new_commit() {
+      let data = {
+        'msg': this.msg,
+        'city': this.city,
+        'imgUrl': this.dataURl
+      }
+
+      if (this.msg != '') {
+        this.axios
+          .post('/new_commitmood', data)
+          .then(res => {
+            console.log(res)
+            if (res.data.status == 'ok') {
+              this.$router.replace('/main/moodList')
+              Toast({
+                message: res.data.message
+              })
+              // let t = setTimeout(() => {
+              //   this.$router.replace('/main/moodList')
+              //   clearTimeout(t)
+              // }, 3000)
+            } else {
+              Toast({
+                message: res.data.message
+              })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        Toast({
+          message: '真的啥也不想说吗^_^！'
+        })
+      }
+    },
+    //旧版上传已废弃
     commit() {
       var fd = new FormData() //创建form对象
 

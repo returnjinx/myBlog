@@ -12,7 +12,7 @@
         v-if="i.imgUrl != 'null'"
       >
         <img
-          :src="imgUrl + i.imgUrl"
+          :src="setImgBucket( i.imgUrl)"
           alt=""
         />
       </div>

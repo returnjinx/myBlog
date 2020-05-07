@@ -4,7 +4,7 @@ import index from './common/index'
 import store from './store/store'
 import Promise from 'promise-polyfill'
 import router from './router/router'
-
+import jinx_sdk from './common/js/jinx_sdk.js'
 // import Mint from 'mint-ui';
 // import 'mint-ui/lib/style.css';
 // Vue.use(Mint);
@@ -63,6 +63,7 @@ const app = new Vue({
 })
 
 app.$mount('#app')
+Vue.use(jinx_sdk)
 
 var browser = {
   versions: (function () {
