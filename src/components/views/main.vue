@@ -175,7 +175,9 @@ export default {
             this.$store.commit('setSocket')
           }
 
-          const url = 'http://hellojinx.cn:4000/top/list?idx=1'
+          // const url = 'http://hellojinx.cn:4000/top/list?idx=1'
+          const url = 'http://hellojinx.cn:4000/playlist/detail?id=3778678'
+          // const url = 'http://hellojinx.cn:4000/playlist/detail?id=3001035934'
           fetch(url)
             .then(response => {
               response

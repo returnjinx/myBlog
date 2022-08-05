@@ -73,7 +73,7 @@
                        message: res.data.Msg,
                    });
                    if(res.data.status==1){
-                       this.$router.replace('/main');
+                       this.$router.replace('/main/home');
                        let audio = document.getElementById('audio');
                        audio.play();
                        // sessionStorage.setItem('username',res.data.username);

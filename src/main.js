@@ -49,9 +49,9 @@ if (window.location.href.indexOf('hellojinx.cn') != -1) {
   axios.defaults.baseURL = 'http://hellojinx.cn:3000/'
 } else {
   window.mode = 'DEV'
-  Vue.prototype.imgUrl = 'http://127.0.0.1:3000'
-  window.socket_url = 'ws://127.0.0.1:3001'
-  axios.defaults.baseURL = 'http://127.0.0.1:3000'
+  Vue.prototype.imgUrl = 'http://192.168.0.130:3000'
+  window.socket_url = 'ws://192.168.0.130:3001'
+  axios.defaults.baseURL = 'http://192.168.0.130:3000'
 }
 Vue.prototype.$http = $http
 Vue.prototype.axios = axios
