@@ -24,6 +24,7 @@ export default new VueRouter({
     { path: '/foot', component: my.foot },
     { path: '/plane', component: my.plane },
     { path: '/mood', component: my.mood },
+    { path: '/pano', component: my.pano },
     // { path: '/main/moodList', component: my.moodList },
     // { path: '/main/musicList', component: my.musicList },
     // {path: '/upload', component: my.upload},

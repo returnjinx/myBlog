@@ -1,7 +1,7 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -81,6 +81,7 @@ module.exports = {
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.common.js',
+      '@': path.resolve('src'),
     },
   },
   devServer: {
@@ -95,10 +96,10 @@ module.exports = {
     // progress: true
   },
   devtool: '#eval-source-map',
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = '#source-map';
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
@@ -117,5 +118,5 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
-  ])
+  ]);
 }
