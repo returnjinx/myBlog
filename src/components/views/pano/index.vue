@@ -15,11 +15,16 @@ export default {
     return {
       panoImg: null,
       viewer: null,
+      socket: null,
     };
   },
 
   mounted() {
-    // this.initPano();
+    this.panoImg = panoImg;
+    setTimeout(() => {
+      this.initPano();
+      this.setSocket();
+    }, 100);
   },
 
   methods: {
@@ -33,6 +38,42 @@ export default {
       });
       this.$refs.file.value = '';
     },
+    movePano(pos) {
+      this.viewer.lookAt(pos.pitch, pos.yaw, pos.hfov);
+    },
+
+    sendPanoData() {
+      let data = {
+        pitch: this.viewer.getPitch(),
+        yaw: this.viewer.getYaw(),
+        hfov: this.viewer.getHfov(),
+      };
+      this.socket.emit('same_screen', data);
+    },
+    receivePanoData() {},
+    setSocket() {
+      if (!this.socket) {
+        this.socket = io.connect('ws://localhost:3001');
+        this.socket.on('connecting', function (data) {
+          console.log('连接中...');
+        });
+        this.socket.on('connected', (data) => {
+          console.log('连接成功');
+        });
+        this.socket.on('same_screen', (data) => {
+          console.log(data);
+          this.movePano(data);
+        });
+
+        this.socket.on('disconnect', function () {
+          console.log('与服务其断开');
+        });
+        this.socket.on('connect_failed', function (data) {
+          console.log('连接失败');
+        });
+      }
+    },
+
     initPano() {
       if (!this.viewer) {
         let tapTime = null;
@@ -43,29 +84,8 @@ export default {
           autoLoad: true,
           showControls: false,
           hfov: browser.isMobile() ? 0 : 100,
-          friction: 0.1,
+          // friction: 0.1,
           touchPanSpeedCoeffFactor: 1,
-          // hotSpots: [
-          //   {
-          //     pitch: 14.1,
-          //     yaw: 1.5,
-          //     type: 'info',
-          //     text: 'Baltimore Museum of Art',
-          //     URL: 'https://artbma.org/',
-          //   },
-          //   {
-          //     pitch: -9.4,
-          //     yaw: 222.6,
-          //     type: 'info',
-          //     text: 'Art Museum Drive',
-          //   },
-          //   {
-          //     pitch: -0.9,
-          //     yaw: 144.4,
-          //     type: 'info',
-          //     text: 'North Charles Street',
-          //   },
-          // ],
         });
 
         this.viewer.on('load', () => {});
@@ -77,6 +97,7 @@ export default {
         document.getElementById('panorama').addEventListener('touchmove', (e) => {
           console.log('move');
           tapTime.move = true;
+          this.sendPanoData();
         });
         this.viewer.on('touchend', (e) => {
           tapTime.end = new Date().getTime();
