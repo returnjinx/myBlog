@@ -2,10 +2,12 @@
   <div class="content">
     <input v-if="!panoImg" type="file" ref="file" accept=".jpg,.png" @change="hanlderChangeFile" />
     <div v-else id="panorama"></div>
+    <ToolBar />
   </div>
 </template>
 
 <script>
+import ToolBar from './controls/toolbar.vue';
 import panoImg from '@/img/pano/test.jpg';
 import browser from '@/utils/browser.js';
 export default {
@@ -18,12 +20,13 @@ export default {
       socket: null,
     };
   },
+  components: { ToolBar },
 
   mounted() {
     this.panoImg = panoImg;
     setTimeout(() => {
       this.initPano();
-      this.setSocket();
+      // this.setSocket();
     }, 100);
   },
 
@@ -43,11 +46,15 @@ export default {
     },
 
     sendPanoData() {
+      if (!this.socket) {
+        return;
+      }
       let data = {
         pitch: this.viewer.getPitch(),
         yaw: this.viewer.getYaw(),
         hfov: this.viewer.getHfov(),
       };
+
       this.socket.emit('same_screen', data);
     },
     receivePanoData() {},
@@ -103,7 +110,7 @@ export default {
           tapTime.end = new Date().getTime();
           let time = tapTime.end - tapTime.start;
           if (time >= 50 && !tapTime.move) {
-            console.log('长按了1');
+            console.log('点击');
           }
           tapTime = null;
         });
